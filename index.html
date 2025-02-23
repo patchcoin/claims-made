@@ -2,64 +2,196 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patchcoin Claims</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f8f9fa;
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #16a34a;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --border-color: #e5e7eb;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+        }
+
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .card {
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
         h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
             text-align: center;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
         }
+
         #chartContainer {
-            width: 80%;
-            margin: auto;
+            position: relative;
             height: 400px;
+            width: 100%;
+            margin-bottom: 2rem;
         }
-        canvas {
-            width: 100% !important;
-            height: 100% !important;
+
+        .progress-container {
+            margin-top: 2rem;
         }
-        #progressContainer {
-            width: 80%;
-            margin: 40px auto;
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
+
+        .progress-value {
+            font-weight: 600;
+        }
+
+        .progress-eligible {
+            color: var(--primary-color);
+        }
+
+        .progress-received {
+            color: var(--success-color);
+        }
+
         .progress {
             background: #e9ecef;
-            border-radius: 5px;
+            border-radius: 9999px;
             overflow: hidden;
-            height: 30px;
-            margin-bottom: 15px;
+            height: 1rem;
+            margin-bottom: 1.5rem;
         }
+
         .progress-bar {
             height: 100%;
-            color: white;
-            text-align: center;
-            line-height: 30px;
             transition: width 0.5s ease;
+            border-radius: 9999px;
         }
+
         #capProgressEligible {
-            background: #007bff;
+            background: var(--primary-color);
         }
+
         #capProgressReceived {
-            background: #28a745;
+            background: var(--success-color);
+        }
+
+        .progress-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        /* Custom tooltip styles */
+        .chart-tooltip {
+            background: var(--card-background);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            #chartContainer {
+                height: 300px;
+            }
+
+            .progress {
+                height: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #chartContainer {
+                height: 250px;
+            }
+
+            .progress-label {
+                font-size: 0.875rem;
+            }
+
+            .progress-subtitle {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
 <body>
-<h1>Patchcoin Claims</h1>
-<div id="chartContainer">
-    <canvas id="claimsChart"></canvas>
-</div>
-<div id="progressContainer">
-    <div class="progress">
-        <div id="capProgressEligible" class="progress-bar">0% of 21,000,000 Eligible</div>
-    </div>
-    <div class="progress">
-        <div id="capProgressReceived" class="progress-bar">0% of 21,000,000 Received</div>
+<div class="container">
+    <div class="card">
+        <h1>Patchcoin Claims</h1>
+        <div id="chartContainer">
+            <canvas id="claimsChart"></canvas>
+        </div>
+        <div class="progress-container">
+            <div class="progress-group">
+                <div class="progress-label">
+                    <span>Eligible Progress</span>
+                    <span class="progress-value progress-eligible" id="eligiblePercent">0%</span>
+                </div>
+                <div class="progress">
+                    <div id="capProgressEligible" class="progress-bar"></div>
+                </div>
+                <div class="progress-subtitle" id="eligibleSubtitle">0 / 21,000,000</div>
+            </div>
+            <div class="progress-group">
+                <div class="progress-label">
+                    <span>Received Progress</span>
+                    <span class="progress-value progress-received" id="receivedPercent">0%</span>
+                </div>
+                <div class="progress">
+                    <div id="capProgressReceived" class="progress-bar"></div>
+                </div>
+                <div class="progress-subtitle" id="receivedSubtitle">0 / 21,000,000</div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -68,6 +200,32 @@
     const CAP = 21000000;
 
     let chart;
+
+    function formatNumber(num) {
+        return new Intl.NumberFormat().format(num);
+    }
+
+    function createTooltipHtml(context) {
+        if (!context[0]) return '';
+
+        const idx = context[0].dataIndex;
+        const claim = window.sortedClaims[idx];
+        if (!claim) return '';
+
+        return `
+                <div class="chart-tooltip">
+                    <div style="font-weight: 600; margin-bottom: 8px;">${context[0].label}</div>
+                    <div style="color: ${context[0].dataset.borderColor};">
+                        ${context[0].dataset.label}: ${formatNumber(context[0].parsed.y)}
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.8em; color: #666;">
+                        <div>Peercoin: ${claim.peercoin_address.slice(0, 20)}...</div>
+                        <div>Patchcoin: ${claim.patchcoin_address.slice(0, 20)}...</div>
+                        <div>Balance: ${formatNumber(claim.peercoin_balance)}</div>
+                    </div>
+                </div>
+            `;
+    }
 
     async function fetchData() {
         try {
@@ -82,9 +240,7 @@
 
     async function updateDashboard() {
         const data = await fetchData();
-
         data.sort((a, b) => a.nTime - b.nTime);
-
         window.sortedClaims = data;
 
         const times = [];
@@ -104,109 +260,124 @@
             times.push(date.toLocaleString());
         });
 
-        if(chart) {
-            chart.data.labels = times;
-            chart.data.datasets[0].data = cumulativeEligible;
-            chart.data.datasets[1].data = cumulativeReceived;
-            chart.update();
-        } else {
-            const ctx = document.getElementById('claimsChart').getContext('2d');
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: times,
-                    datasets: [
-                        {
-                            label: 'Cumulative Patchcoin Eligible',
-                            data: cumulativeEligible,
-                            backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                            borderColor: 'rgba(0, 123, 255, 1)',
-                            fill: true,
-                            tension: 0.1
-                        },
-                        {
-                            label: 'Cumulative Total Received',
-                            data: cumulativeReceived,
-                            backgroundColor: 'rgba(40, 167, 69, 0.2)',
-                            borderColor: 'rgba(40, 167, 69, 1)',
-                            fill: true,
-                            tension: 0.1
-                        }
-                    ]
+        const chartConfig = {
+            type: 'line',
+            data: {
+                labels: times,
+                datasets: [
+                    {
+                        label: 'Cumulative Eligible',
+                        data: cumulativeEligible,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Cumulative Received',
+                        data: cumulativeReceived,
+                        borderColor: '#16a34a',
+                        backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Time'
-                            },
-                            ticks: {
-                                autoSkip: true,
-                                maxTicksLimit: 10
-                            }
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
                         },
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Amount'
-                            }
+                        ticks: {
+                            maxTicksLimit: window.innerWidth < 768 ? 5 : 10,
+                            maxRotation: 45,
+                            minRotation: 45
                         }
                     },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                title: (context) => {
-                                    return context[0].label;
-                                },
-                                label: (context) => {
-                                    let label = context.dataset.label || '';
-                                    let value = context.parsed.y;
-                                    return `${label}: ${value}`;
-                                },
-                                afterBody: (context) => {
-                                    const idx = context[0].dataIndex;
-                                    const claim = window.sortedClaims[idx];
-                                    if (claim) {
-                                        return [
-                                            `Peercoin Address: ${claim.peercoin_address}`,
-                                            `Patchcoin Address: ${claim.patchcoin_address}`,
-                                            `Signature: ${claim.signature}`,
-                                            `Peercoin Balance: ${claim.peercoin_balance}`,
-                                            `Patchcoin Eligible: ${claim.patchcoin_eligible}`,
-                                            `Total Received: ${claim.total_received}`,
-                                            `nTime: ${new Date(claim.nTime * 1000).toLocaleString()}`
-                                        ];
-                                    }
-                                    return [];
-                                }
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            callback: (value) => formatNumber(value)
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        enabled: false,
+                        external: function(context) {
+                            const tooltipEl = document.getElementById('chartjs-tooltip');
+
+                            if (!tooltipEl) {
+                                const div = document.createElement('div');
+                                div.id = 'chartjs-tooltip';
+                                document.body.appendChild(div);
                             }
+
+                            const tooltipModel = context.tooltip;
+                            if (tooltipModel.opacity === 0) {
+                                tooltipEl.style.opacity = 0;
+                                return;
+                            }
+
+                            tooltipEl.innerHTML = createTooltipHtml(tooltipModel.dataPoints);
+
+                            const position = context.chart.canvas.getBoundingClientRect();
+                            tooltipEl.style.position = 'absolute';
+                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                            tooltipEl.style.opacity = 1;
+                            tooltipEl.style.pointerEvents = 'none';
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
                         }
                     }
                 }
-            });
+            }
+        };
+
+        if (chart) {
+            chart.destroy();
         }
 
-        const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
-        const eligibleBar = document.getElementById('capProgressEligible');
-        eligibleBar.style.width = eligiblePercent + '%';
-        eligibleBar.textContent = eligiblePercent.toFixed(2) + '% of 21,000,000 Eligible';
+        const ctx = document.getElementById('claimsChart').getContext('2d');
+        chart = new Chart(ctx, chartConfig);
 
+        const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
         const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
-        const receivedBar = document.getElementById('capProgressReceived');
-        receivedBar.style.width = receivedPercent + '%';
-        receivedBar.textContent = receivedPercent.toFixed(2) + '% of 21,000,000 Received';
+
+        document.getElementById('capProgressEligible').style.width = eligiblePercent + '%';
+        document.getElementById('capProgressReceived').style.width = receivedPercent + '%';
+
+        document.getElementById('eligiblePercent').textContent = eligiblePercent.toFixed(2) + '%';
+        document.getElementById('receivedPercent').textContent = receivedPercent.toFixed(2) + '%';
+
+        document.getElementById('eligibleSubtitle').textContent =
+            `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
+        document.getElementById('receivedSubtitle').textContent =
+            `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
     }
 
     updateDashboard();
-
     setInterval(updateDashboard, 60000);
 
     window.addEventListener('resize', () => {
-        if(chart) {
+        if (chart) {
             chart.resize();
         }
     });
