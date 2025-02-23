@@ -15,13 +15,11 @@
             --text-primary: #1f2937;
             --text-secondary: #6b7280;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--background-color);
@@ -29,13 +27,11 @@
             line-height: 1.5;
             padding: 1rem;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem;
         }
-
         .card {
             background: var(--card-background);
             border-radius: 12px;
@@ -43,34 +39,28 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-
         h1, h2 {
             text-align: center;
             color: var(--text-primary);
             margin-bottom: 1.5rem;
         }
-
         h1 {
             font-size: 1.875rem;
             font-weight: 700;
         }
-
         h2 {
             font-size: 1.5rem;
             font-weight: 600;
         }
-
         #chartContainer {
             position: relative;
             height: 400px;
             width: 100%;
             margin-bottom: 2rem;
         }
-
         .progress-container {
             margin-top: 2rem;
         }
-
         .progress-label {
             display: flex;
             justify-content: space-between;
@@ -78,19 +68,15 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
-
         .progress-value {
             font-weight: 600;
         }
-
         .progress-eligible {
             color: var(--primary-color);
         }
-
         .progress-received {
             color: var(--success-color);
         }
-
         .progress {
             background: #e9ecef;
             border-radius: 9999px;
@@ -98,28 +84,23 @@
             height: 1rem;
             margin-bottom: 1.5rem;
         }
-
         .progress-bar {
             height: 100%;
             transition: width 0.5s ease;
             border-radius: 9999px;
         }
-
         #capProgressEligible {
             background: var(--primary-color);
         }
-
         #capProgressReceived {
             background: var(--success-color);
         }
-
         .progress-subtitle {
             font-size: 0.875rem;
             color: var(--text-secondary);
             text-align: right;
             margin-top: 0.25rem;
         }
-
         .chart-tooltip {
             background: var(--card-background);
             border-radius: 8px;
@@ -128,34 +109,31 @@
             border: 1px solid var(--border-color);
             font-size: 0.875rem;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         table th, table td {
             padding: 0.75rem;
             border-bottom: 1px solid var(--border-color);
             text-align: left;
         }
-
         table th {
             background: var(--card-background);
             font-weight: 600;
         }
-
         table tbody tr:hover {
             background-color: #f1f5f9;
         }
-
         .truncate {
             max-width: 150px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
+        th.amount, td.amount {
+            text-align: right;
+        }
         input[type="text"] {
             margin-bottom: 1rem;
             padding: 0.5rem;
@@ -163,13 +141,11 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
         }
-
         @media (max-width: 768px) {
             #chartContainer {
                 height: 300px;
             }
         }
-
         @media (max-width: 480px) {
             #chartContainer {
                 height: 250px;
@@ -210,7 +186,6 @@
             </div>
         </div>
     </div>
-
     <div class="card">
         <h2>Claims Data</h2>
         <input type="text" id="claimsSearch" placeholder="Search claims...">
@@ -219,9 +194,9 @@
             <tr>
                 <th>Peercoin Address</th>
                 <th>Patchcoin Address</th>
-                <th>Peercoin Balance</th>
-                <th>Patchcoin Eligible</th>
-                <th>Total Received</th>
+                <th class="amount">Peercoin Balance</th>
+                <th class="amount">Patchcoin Eligible</th>
+                <th class="amount">Total Received</th>
                 <th>Time</th>
             </tr>
             </thead>
@@ -230,7 +205,6 @@
         </table>
     </div>
 </div>
-
 <script>
     const DATA_URL = 'https://raw.githubusercontent.com/patchcoin/claims-made/refs/heads/main/claims.json';
     const CAP = 21000000;
@@ -242,23 +216,25 @@
         return new Intl.NumberFormat(userLocale).format(num);
     }
 
+    function formatAmount(num) {
+        return new Intl.NumberFormat(userLocale, { minimumFractionDigits: 6, maximumFractionDigits: 6 }).format(num);
+    }
+
     function createTooltipHtml(context) {
         if (!context[0]) return '';
-
         const idx = context[0].dataIndex;
         const claim = window.sortedClaims[idx];
         if (!claim) return '';
-
         return `
         <div class="chart-tooltip">
           <div style="font-weight: 600; margin-bottom: 8px;">${context[0].label}</div>
           <div style="color: ${context[0].dataset.borderColor};">
-            ${context[0].dataset.label}: ${formatNumber(context[0].parsed.y)}
+            ${context[0].dataset.label}: ${formatAmount(context[0].parsed.y)}
           </div>
           <div style="margin-top: 8px;">
             <div class="truncate">Peercoin: ${claim.peercoin_address}</div>
             <div class="truncate">Patchcoin: ${claim.patchcoin_address}</div>
-            <div>Balance: ${formatNumber(claim.peercoin_balance)}</div>
+            <div>Balance: ${formatAmount(claim.peercoin_balance)}</div>
           </div>
         </div>
       `;
@@ -283,9 +259,9 @@
             row.innerHTML = `
           <td class="truncate">${item.peercoin_address}</td>
           <td class="truncate">${item.patchcoin_address}</td>
-          <td>${formatNumber(item.peercoin_balance)}</td>
-          <td>${formatNumber(item.patchcoin_eligible)}</td>
-          <td>${formatNumber(item.total_received)}</td>
+          <td class="amount">${formatAmount(item.peercoin_balance)}</td>
+          <td class="amount">${formatAmount(item.patchcoin_eligible)}</td>
+          <td class="amount">${formatAmount(item.total_received)}</td>
           <td>${new Date(item.nTime * 1000).toLocaleString(userLocale)}</td>
         `;
             tableBody.appendChild(row);
@@ -306,24 +282,19 @@
         const data = await fetchData();
         data.sort((a, b) => a.nTime - b.nTime);
         window.sortedClaims = data;
-
         const times = [];
         const cumulativeEligible = [];
         const cumulativeReceived = [];
         let totalEligible = 0;
         let totalReceived = 0;
-
         data.forEach(item => {
             totalEligible += item.patchcoin_eligible;
             cumulativeEligible.push(totalEligible);
-
             totalReceived += item.total_received;
             cumulativeReceived.push(totalReceived);
-
             const date = new Date(item.nTime * 1000);
             times.push(date.toLocaleString(userLocale));
         });
-
         const chartConfig = {
             type: 'line',
             data: {
@@ -369,7 +340,7 @@
                         beginAtZero: true,
                         grid: { color: 'rgba(0, 0, 0, 0.1)' },
                         ticks: {
-                            callback: (value) => formatNumber(value)
+                            callback: (value) => formatAmount(value)
                         }
                     }
                 },
@@ -383,15 +354,12 @@
                                 document.body.appendChild(div);
                                 return div;
                             })();
-
                             const tooltipModel = context.tooltip;
                             if (tooltipModel.opacity === 0) {
                                 tooltipEl.style.opacity = 0;
                                 return;
                             }
-
                             tooltipEl.innerHTML = createTooltipHtml(tooltipModel.dataPoints);
-
                             const position = context.chart.canvas.getBoundingClientRect();
                             tooltipEl.style.position = 'absolute';
                             tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
@@ -409,11 +377,9 @@
                 }
             }
         };
-
         if (chart) { chart.destroy(); }
         const ctx = document.getElementById('claimsChart').getContext('2d');
         chart = new Chart(ctx, chartConfig);
-
         const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
         const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
         document.getElementById('capProgressEligible').style.width = eligiblePercent + '%';
@@ -421,16 +387,14 @@
         document.getElementById('eligiblePercent').textContent = eligiblePercent.toFixed(2) + '%';
         document.getElementById('receivedPercent').textContent = receivedPercent.toFixed(2) + '%';
         document.getElementById('eligibleSubtitle').textContent =
-            `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
+            `${formatAmount(totalEligible)} / ${formatAmount(CAP)}`;
         document.getElementById('receivedSubtitle').textContent =
-            `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
-
+            `${formatAmount(totalReceived)} / ${formatAmount(CAP)}`;
         updateTable(data);
     }
 
     updateDashboard();
     setInterval(updateDashboard, 60000);
-
     window.addEventListener('resize', () => {
         if (chart) { chart.resize(); }
     });
