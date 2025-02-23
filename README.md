@@ -5,11 +5,11 @@
 - **Total Claims:** 114
 - **Total Peercoin Balance:** 1284846.050518 PPC
 - **Total Patchcoin Eligible:** 2469120.203950 PTC
-- **Total Received:** 268800.000000 PTC
-- **Progress Toward 21M Cap:** 1.28%
+- **Total Received:** 271200.000000 PTC
+- **Progress Toward 21M Cap:** 1.29%
 
 ```
-[#-------------------------------------------------------------------------------] (1.28%)
+[#-------------------------------------------------------------------------------] (1.29%)
 ```
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
@@ -106,7 +106,7 @@
 | PFARvFyXKWeK2zQe2no2DA8xAyQPbxAVUU | PN73d9StiEWRYRZ2aFATpRrMjFB9AeFVzm | 61048.745466 | 50000.000000 | 0.000000 | 1740284505 |
 | PEkwBZ4p9yB6RU7bTvUW1NndyV3oYGgj2F | PMEYqfXtFdZCnWTkGdY6Z9puMvL4wQ8SM1 | 561.177604 | 5611.776040 | 0.000000 | 1740284480 |
 | PE9KCCQHCSSEoUQGUGP4UbNVwqinPc5ntN | PREVDC1MiPeGBj1bZDfXc64DMNz3u8JQJx | 288.635690 | 2886.356900 | 0.000000 | 1740284451 |
-| PE4JuZ3wWHRTA5EMS4ZaAd3rV8m8zEaegj | PArUVMPPn3vQQ6GRiMy3V8YH7bM6Dymhcb | 35732.993850 | 50000.000000 | 42090.017230 | 1740284415 |
+| PE4JuZ3wWHRTA5EMS4ZaAd3rV8m8zEaegj | PArUVMPPn3vQQ6GRiMy3V8YH7bM6Dymhcb | 35732.993850 | 50000.000000 | 44490.017230 | 1740284415 |
 | PBPreAYJ1TVXCE7UeSvR5s9qZ2SSjhH2Nv | PAx9KBNpoQjdvdYNcT78n62UPdvPe8G9sd | 821.549271 | 8215.492710 | 8215.492710 | 1740284377 |
 | PB1VCAyCZvWTr2M1RuhEJ7mPCMBSpRSAUe | PKbB8JZWQHfzc1eoLgu6v7c56oRRzgchx4 | 2471.693551 | 24716.935510 | 24716.935510 | 1740284328 |
 | P9XncTagaAQ8hiNsYVy7oQwENuWaqpM51x | P9dQzqQKHkgaMkxxRqsrxQLrUHoQe82QYm | 383.155533 | 3831.555330 | 3831.555330 | 1740283782 |
