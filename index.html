@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Patchcoin Claims</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #chartContainer {
+            width: 80%;
+            margin: auto;
+            height: 400px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        #progressContainer {
+            width: 80%;
+            margin: 40px auto;
+        }
+        .progress {
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 30px;
+            margin-bottom: 15px;
+        }
+        .progress-bar {
+            height: 100%;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            transition: width 0.5s ease;
+        }
+        #capProgressEligible {
+            background: #007bff;
+        }
+        #capProgressReceived {
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+<h1>Patchcoin Claims</h1>
+<div id="chartContainer">
+    <canvas id="claimsChart"></canvas>
+</div>
+<div id="progressContainer">
+    <div class="progress">
+        <div id="capProgressEligible" class="progress-bar">0% of 21,000,000 Eligible</div>
+    </div>
+    <div class="progress">
+        <div id="capProgressReceived" class="progress-bar">0% of 21,000,000 Received</div>
+    </div>
+</div>
+
+<script>
+    const DATA_URL = 'https://raw.githubusercontent.com/patchcoin/claims-made/main/claims.json';
+    const CAP = 21000000;
+
+    let chart;
+
+    async function fetchData() {
+        try {
+            const response = await fetch(DATA_URL);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return [];
+        }
+    }
+
+    async function updateDashboard() {
+        const data = await fetchData();
+
+        data.sort((a, b) => a.nTime - b.nTime);
+
+        window.sortedClaims = data;
+
+        const times = [];
+        const cumulativeEligible = [];
+        const cumulativeReceived = [];
+        let totalEligible = 0;
+        let totalReceived = 0;
+
+        data.forEach(item => {
+            totalEligible += item.patchcoin_eligible;
+            cumulativeEligible.push(totalEligible);
+
+            totalReceived += item.total_received;
+            cumulativeReceived.push(totalReceived);
+
+            const date = new Date(item.nTime * 1000);
+            times.push(date.toLocaleString());
+        });
+
+        if(chart) {
+            chart.data.labels = times;
+            chart.data.datasets[0].data = cumulativeEligible;
+            chart.data.datasets[1].data = cumulativeReceived;
+            chart.update();
+        } else {
+            const ctx = document.getElementById('claimsChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [
+                        {
+                            label: 'Cumulative Patchcoin Eligible',
+                            data: cumulativeEligible,
+                            backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Cumulative Total Received',
+                            data: cumulativeReceived,
+                            backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            fill: true,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            },
+                            ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 10
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: (context) => {
+                                    return context[0].label;
+                                },
+                                label: (context) => {
+                                    let label = context.dataset.label || '';
+                                    let value = context.parsed.y;
+                                    return `${label}: ${value}`;
+                                },
+                                afterBody: (context) => {
+                                    const idx = context[0].dataIndex;
+                                    const claim = window.sortedClaims[idx];
+                                    if (claim) {
+                                        return [
+                                            `Peercoin Address: ${claim.peercoin_address}`,
+                                            `Patchcoin Address: ${claim.patchcoin_address}`,
+                                            `Signature: ${claim.signature}`,
+                                            `Peercoin Balance: ${claim.peercoin_balance}`,
+                                            `Patchcoin Eligible: ${claim.patchcoin_eligible}`,
+                                            `Total Received: ${claim.total_received}`,
+                                            `nTime: ${new Date(claim.nTime * 1000).toLocaleString()}`
+                                        ];
+                                    }
+                                    return [];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
+        const eligibleBar = document.getElementById('capProgressEligible');
+        eligibleBar.style.width = eligiblePercent + '%';
+        eligibleBar.textContent = eligiblePercent.toFixed(2) + '% of 21,000,000 Eligible';
+
+        const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
+        const receivedBar = document.getElementById('capProgressReceived');
+        receivedBar.style.width = receivedPercent + '%';
+        receivedBar.textContent = receivedPercent.toFixed(2) + '% of 21,000,000 Received';
+    }
+
+    updateDashboard();
+
+    setInterval(updateDashboard, 60000);
+
+    window.addEventListener('resize', () => {
+        if(chart) {
+            chart.resize();
+        }
+    });
+</script>
+</body>
+</html>
