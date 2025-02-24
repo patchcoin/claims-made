@@ -1,5 +1,14 @@
 [
   {
+    "peercoin_address": "PCq8dTrdPPw8rYrJViFRVecAJJCF6zYdK1",
+    "patchcoin_address": "PLHd4zDaYMoNHMXd6PrroPkYiaR6o4QuDE",
+    "signature": "HzbvDZRz2sXuxxyavIWs+uJoGLVWITRWIo1I+/r0Y00sXlqxBVzNNyWKoWEKTkd/tg2lskr3ZFeZ+EqKN0+dU8Q=",
+    "peercoin_balance": 211.514217,
+    "patchcoin_eligible": 2115.142170,
+    "total_received": 0.000000,
+    "nTime": 1740402602
+  },
+  {
     "peercoin_address": "PEKJSFx9H4LaeVm3SmQdjZoG3zm7ag2T3k",
     "patchcoin_address": "PP91e5vpdJC2NuCxrBWEEiQAQxDmMnAxMp",
     "signature": "IBpb33vgmEpddKrdsL9zwhrTauCjRGAV+lRgimYw2nDlX7ADVD37VPCWUB59WjstQMA0CSP7fZ33YBKWV+Ru4G0=",
@@ -1499,7 +1508,7 @@
     "signature": "IDNcO7CwuxhfAS5iUcasGOGmJDcIWQp01tpU1QYcv7PKDZsQEd6MHcx+5m+eEySVUgjJ4jkBaQXCnLTz8MHpm74=",
     "peercoin_balance": 51341.568448,
     "patchcoin_eligible": 50000.000000,
-    "total_received": 20793.846770,
+    "total_received": 23193.846770,
     "nTime": 1740284885
   },
   {
