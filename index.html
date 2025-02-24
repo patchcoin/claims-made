@@ -113,6 +113,9 @@
             padding: 8px;
             text-align: left;
         }
+        th.number, td.number {
+            text-align: right;
+        }
         th {
             background: #f2f2f2;
         }
@@ -129,9 +132,6 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
             font-size: 0.875rem;
-        }
-        td.number {
-            text-align: right;
         }
         @media (max-width: 768px) {
             body { padding: 0.5rem; }
@@ -185,9 +185,9 @@
                     <th>Time</th>
                     <th>Peercoin Address</th>
                     <th>Patchcoin Address</th>
-                    <th>Peercoin Balance</th>
-                    <th>Patchcoin Eligible</th>
-                    <th>Total Received</th>
+                    <th class="number">Peercoin Balance</th>
+                    <th class="number">Patchcoin Eligible</th>
+                    <th class="number">Total Received</th>
                     <th>Action</th>
                 </tr>
                 </thead>
