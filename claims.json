@@ -6,7 +6,7 @@
     "peercoin_balance": 302.387994,
     "patchcoin_eligible": 3023.879940,
     "total_received": 0.000000,
-    "nTime": 1740358104
+    "nTime": 1740358121
   },
   {
     "peercoin_address": "PBAjNDrGZka32tAF47VH9NoAyLRM4fRTPp",
@@ -1193,7 +1193,7 @@
     "signature": "H5bTbWSV6i+ZAMEfGzD3NuYN47FlIsAr4dDyYZNUwzZObfGZgVdbVe6YNm3sZRys+lg0BSsd1uBhHwuzPVkehmA=",
     "peercoin_balance": 915.252001,
     "patchcoin_eligible": 9152.520010,
-    "total_received": 4042.012430,
+    "total_received": 6442.012430,
     "nTime": 1740284644
   },
   {
