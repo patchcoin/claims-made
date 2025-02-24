@@ -14,15 +14,13 @@
             --border-color: #e5e7eb;
             --text-primary: #1f2937;
             --text-secondary: #6b7280;
-            --fill-color: rgba(144,238,144,0.2);
+            --fill-color: rgba(144,238,144,0.2); /* lightgreen with 20% opacity */
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--background-color);
@@ -30,13 +28,11 @@
             line-height: 1.5;
             padding: 1rem;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem;
         }
-
         .card {
             background: var(--card-background);
             border-radius: 12px;
@@ -44,7 +40,6 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-
         h1 {
             font-size: 1.875rem;
             font-weight: 700;
@@ -52,18 +47,15 @@
             color: var(--text-primary);
             margin-bottom: 1.5rem;
         }
-
         #chartContainer {
             position: relative;
             height: 400px;
             width: 100%;
             margin-bottom: 2rem;
         }
-
         .progress-container {
             margin-top: 2rem;
         }
-
         .progress-label {
             display: flex;
             justify-content: space-between;
@@ -71,19 +63,15 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
-
         .progress-value {
             font-weight: 600;
         }
-
         .progress-eligible {
             color: var(--primary-color);
         }
-
         .progress-received {
             color: var(--success-color);
         }
-
         .progress {
             background: #e9ecef;
             border-radius: 9999px;
@@ -91,33 +79,27 @@
             height: 1rem;
             margin-bottom: 1.5rem;
         }
-
         .progress-bar {
             height: 100%;
             transition: width 0.5s ease;
             border-radius: 9999px;
         }
-
         #capProgressEligible {
             background: var(--primary-color);
         }
-
         #capProgressReceived {
             background: var(--success-color);
         }
-
         .progress-subtitle {
             font-size: 0.875rem;
             color: var(--text-secondary);
             text-align: right;
             margin-top: 0.25rem;
         }
-
         .table-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -140,7 +122,6 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-
         .chart-tooltip {
             background: var(--card-background);
             border-radius: 8px;
@@ -149,7 +130,9 @@
             border: 1px solid var(--border-color);
             font-size: 0.875rem;
         }
-
+        td.number {
+            text-align: right;
+        }
         @media (max-width: 768px) {
             body { padding: 0.5rem; }
             .container { padding: 0.5rem; }
@@ -158,7 +141,6 @@
             #chartContainer { height: 300px; }
             .progress { height: 0.75rem; }
         }
-
         @media (max-width: 480px) {
             #chartContainer { height: 250px; }
             .progress-label { font-size: 0.875rem; }
@@ -221,8 +203,10 @@
     const CAP = 21000000;
     let chart;
 
+    window.toggleStates = {};
+
     function formatNumber(num) {
-        return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(num);
+        return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
     }
 
     function truncatedAddress(addr) {
@@ -279,7 +263,8 @@
             times.push(date.toLocaleString());
         });
 
-        // Update chart
+        const isSmallDisplay = window.innerWidth < 480;
+
         const chartConfig = {
             type: 'line',
             data: {
@@ -292,7 +277,8 @@
                         backgroundColor: 'rgba(37, 99, 235, 0.1)',
                         fill: true,
                         tension: 0.4,
-                        borderWidth: 2
+                        borderWidth: 2,
+                        pointRadius: isSmallDisplay ? 0 : 3
                     },
                     {
                         label: 'Cumulative Received',
@@ -367,8 +353,8 @@
         const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
         document.getElementById('capProgressEligible').style.width = eligiblePercent + '%';
         document.getElementById('capProgressReceived').style.width = receivedPercent + '%';
-        document.getElementById('eligiblePercent').textContent = eligiblePercent.toFixed(0) + '%';
-        document.getElementById('receivedPercent').textContent = receivedPercent.toFixed(0) + '%';
+        document.getElementById('eligiblePercent').textContent = eligiblePercent.toFixed(2) + '%';
+        document.getElementById('receivedPercent').textContent = receivedPercent.toFixed(2) + '%';
         document.getElementById('eligibleSubtitle').textContent =
             `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
         document.getElementById('receivedSubtitle').textContent =
@@ -376,7 +362,10 @@
 
         const tableBody = document.querySelector("#claimsTable tbody");
         tableBody.innerHTML = "";
+
         data.forEach((item, index) => {
+            const key = item.peercoin_address + '-' + item.patchcoin_address + '-' + item.nTime;
+
             const row = document.createElement("tr");
             const fillPercentage = item.patchcoin_eligible > 0
                 ? Math.min((item.total_received / item.patchcoin_eligible) * 100, 100)
@@ -387,15 +376,15 @@
           <td>${date}</td>
           <td class="truncate" title="${item.peercoin_address}">${truncatedAddress(item.peercoin_address)}</td>
           <td class="truncate" title="${item.patchcoin_address}">${truncatedAddress(item.patchcoin_address)}</td>
-          <td>${formatNumber(item.peercoin_balance)}</td>
-          <td>${formatNumber(item.patchcoin_eligible)}</td>
-          <td>${formatNumber(item.total_received)}</td>
-          <td><button class="toggleRow" data-index="${index}">Toggle JSON</button></td>
+          <td class="number">${formatNumber(item.peercoin_balance)}</td>
+          <td class="number">${formatNumber(item.patchcoin_eligible)}</td>
+          <td class="number">${formatNumber(item.total_received)}</td>
+          <td><button class="toggleRow" data-key="${key}">Toggle JSON</button></td>
         `;
             tableBody.appendChild(row);
 
             const detailRow = document.createElement("tr");
-            detailRow.style.display = "none";
+            detailRow.style.display = window.toggleStates[key] ? "table-row" : "none";
             const detailCell = document.createElement("td");
             detailCell.colSpan = 7;
             detailCell.style.background = "#f0f0f0";
@@ -404,13 +393,18 @@
             tableBody.appendChild(detailRow);
         });
 
-        const toggleButtons = document.querySelectorAll(".toggleRow");
-        toggleButtons.forEach(button => {
+        document.querySelectorAll(".toggleRow").forEach(button => {
             button.addEventListener("click", function() {
+                const key = this.dataset.key;
                 const currentRow = this.parentElement.parentElement;
                 const detailRow = currentRow.nextElementSibling;
-                detailRow.style.display = (detailRow.style.display === "none" || detailRow.style.display === "")
-                    ? "table-row" : "none";
+                if (detailRow.style.display === "none" || detailRow.style.display === "") {
+                    detailRow.style.display = "table-row";
+                    window.toggleStates[key] = true;
+                } else {
+                    detailRow.style.display = "none";
+                    window.toggleStates[key] = false;
+                }
             });
         });
     }
