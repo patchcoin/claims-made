@@ -263,8 +263,6 @@
             times.push(date.toLocaleString());
         });
 
-        const isSmallDisplay = window.innerWidth < 480;
-
         const chartConfig = {
             type: 'line',
             data: {
@@ -278,7 +276,7 @@
                         fill: true,
                         tension: 0.4,
                         borderWidth: 2,
-                        pointRadius: isSmallDisplay ? 0 : 3
+                        pointRadius: 0
                     },
                     {
                         label: 'Cumulative Received',
