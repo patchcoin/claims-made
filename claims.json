@@ -1,5 +1,86 @@
 [
   {
+    "peercoin_address": "PErJ2hFx1iUYF5FV3EWH8ac72EJZH22Xxo",
+    "patchcoin_address": "PMk5KtB7cBSHPJ96gnvLzB1ySZr8GXaYdz",
+    "signature": "IByAhOx4TrZszo2xBKeKhSUzo8IUPXZ9/WLU+ytvP2znbvVALXDVKhUzfBLHLKtqha0vtxRAZGkJmP+pxM0xT24=",
+    "peercoin_balance": 172.617805,
+    "patchcoin_eligible": 1726.178050,
+    "total_received": 0.000000,
+    "nTime": 1740492040
+  },
+  {
+    "peercoin_address": "P9bLG7UNgMTkDh9KQWaA5Uj9vjm3FEW2BB",
+    "patchcoin_address": "PAqDkPayw9YgMSkasgZqEzgSTb3gX1kE16",
+    "signature": "INm89qTXkRIAhwyrOqoQ3b0QWfykbWEL4TZcRuVyuqiyTM35hkgaOwH4ZxIGVfNBy7h8Nl543CTG7tBjpdocd+4=",
+    "peercoin_balance": 157.379158,
+    "patchcoin_eligible": 1573.791580,
+    "total_received": 0.000000,
+    "nTime": 1740492016
+  },
+  {
+    "peercoin_address": "PT3DL7cY9StJTUYiAGD2UYXuYP3cR6hzW7",
+    "patchcoin_address": "PAGmMSY2w3ATusPoNj5HfMcvyVwA87UMGr",
+    "signature": "INlLYPWiN5Xp9BxFkzuCRC38b7moKS3rb5VKGHGjPlWENOLVCEDAHldzsPEwNn31ByUX8QyMHOr5t8A2OhQXoxE=",
+    "peercoin_balance": 138.000000,
+    "patchcoin_eligible": 1380.000000,
+    "total_received": 0.000000,
+    "nTime": 1740491990
+  },
+  {
+    "peercoin_address": "PSDgNbhNhNKy83VE6dGYNWjUDBbUbz2zWT",
+    "patchcoin_address": "PKq5BrCZXy52X5Pc1oiHEAr5Yje3NS9c4h",
+    "signature": "HwLPCo5x+0LSQjWVs0TVoOCExhN3SY2HJ2sasOWAWKvVAFi+shbLSeZp1L/mJgwYC7/vGl8lAderIBF+650Tj+Q=",
+    "peercoin_balance": 157.470272,
+    "patchcoin_eligible": 1574.702720,
+    "total_received": 0.000000,
+    "nTime": 1740491967
+  },
+  {
+    "peercoin_address": "PAsSsGBk9EZBGKP37i9Tjj4ffaYTJ5fkek",
+    "patchcoin_address": "PSYtJz58r9U5MnKHVnu29WdAQRFY2R1BG6",
+    "signature": "IDG+x0ws7y73x/NDjMaisjY8uqpTxjO90yrnA1zNmPwgDSmfd2bJ+pFKfhQwdQUwfVSlUr/bEnxPULQlow74g7Q=",
+    "peercoin_balance": 150.000000,
+    "patchcoin_eligible": 1500.000000,
+    "total_received": 0.000000,
+    "nTime": 1740491943
+  },
+  {
+    "peercoin_address": "PNyxULTRyNSiGEP4YBhfdBgSC6Px22kAJT",
+    "patchcoin_address": "PXBave1ZxwpHBxVBpHaNxiz9rRMSV4TBNn",
+    "signature": "IPMz8yx8AP2lBd4zFJ7szGix0/2mCJPqFO5VVX/2z68IZ1G7fU5S0BREaRSZa9YTz8JUmWjXU7mcch/PWnPjbEQ=",
+    "peercoin_balance": 154.919611,
+    "patchcoin_eligible": 1549.196110,
+    "total_received": 0.000000,
+    "nTime": 1740491919
+  },
+  {
+    "peercoin_address": "P9WwtbBTMq2JzHH4u7HJrfsX532E8g5JEc",
+    "patchcoin_address": "PEVkkS7tVm6qJU3K2mQc5mhCHzETUDp3nW",
+    "signature": "INkXvYy0H7ayvD4YE7I26xZhNMazpWTEww4h2M4Q+/rFANhP8rIY1fhDvqcF+AHHvjM0zNYn7uZVF9ARibqt/d8=",
+    "peercoin_balance": 130.677168,
+    "patchcoin_eligible": 1306.771680,
+    "total_received": 0.000000,
+    "nTime": 1740491896
+  },
+  {
+    "peercoin_address": "PFSpEnNfTMNuWosQU32uSV8RpCPfXMD467",
+    "patchcoin_address": "PUzt927Rc5zaVmEfKaZXCdocS3zFRowcsp",
+    "signature": "H2NswCz/5/nBpBzyOCacmVydGAp1hO0OQHaH3KDFwi99bSW2gDmlX441jWPvyhAP0cG7FTqpuskMTtPZSyutj58=",
+    "peercoin_balance": 589.012374,
+    "patchcoin_eligible": 5890.123740,
+    "total_received": 0.000000,
+    "nTime": 1740491823
+  },
+  {
+    "peercoin_address": "PFhTc5BdcyKEU3QNLTL7VSXbBBss3VnNy9",
+    "patchcoin_address": "PVKs3gXCNYVBJ7uV5j1NkoppfgGpMPADmo",
+    "signature": "H1OODET5RGPcnllk6t0EFM+k5w1YyByNPlJI+FXzXB9wVzlFrLdkV2Jq/1OFnHGNvqC1bivajT0J5MuCiV7IuHc=",
+    "peercoin_balance": 344.656226,
+    "patchcoin_eligible": 3446.562260,
+    "total_received": 0.000000,
+    "nTime": 1740491735
+  },
+  {
     "peercoin_address": "PBjej5fyc54V4iytXErAVFqgX241ggMS8D",
     "patchcoin_address": "PSjFjQ69HkLTHHEgursKN7hVPSFWaTtcjH",
     "signature": "IHiKd+52tIf5Ngd8FdTfl9RFQP5pH7YKOglTe/m1RYSwSLvI/aY3zRqdGZLO7UAGebhPrv9A1DvFEOZKeHLOPjQ=",
@@ -2093,7 +2174,7 @@
     "signature": "IER5L73uUbWEEEF2VgbLwVjuAOVqMdC7lnmloTzCTqoNW7+tpMo2NL/+vg3Aj7ZNVFMyMHDc1f8/QKaghUQfiBg=",
     "peercoin_balance": 17869.173010,
     "patchcoin_eligible": 50000.000000,
-    "total_received": 30303.319110,
+    "total_received": 32703.319110,
     "nTime": 1740289023
   },
   {
