@@ -4,9 +4,9 @@ https://patchcoin.github.io/claims-made
 
 ## Summary
 
-- **Total Claims:** 405
-- **Total Peercoin Balance:** 2056634.383044 PPC
-- **Total Patchcoin Eligible:** 5784685.808320 PTC
+- **Total Claims:** 409
+- **Total Peercoin Balance:** 2057170.884626 PPC
+- **Total Patchcoin Eligible:** 5790050.824140 PTC
 - **Total Received:** 979200.000000 PTC
 - **Progress Toward 21M Cap:** 4.66%
 
@@ -16,6 +16,10 @@ https://patchcoin.github.io/claims-made
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
+| [PRaZkoh9oGEGduXEE4cKRPXXTDKtC2twVi](https://chainz.cryptoid.info/ppc/address.dws?PRaZkoh9oGEGduXEE4cKRPXXTDKtC2twVi.htm) | PUjoXVD36CdB2Na2zLmA1ndo4r9bUSe89r | 159.234868 | 1592.348680 | 0.000000 | 1740517451 |
+| [PMXx8ByUQjsEjAvVBFcxCW4QBjD8ANXrWk](https://chainz.cryptoid.info/ppc/address.dws?PMXx8ByUQjsEjAvVBFcxCW4QBjD8ANXrWk.htm) | PTWvjYDMvMUm3bgG5HdtzmXWCZNbRkr4uh | 125.169890 | 1251.698900 | 0.000000 | 1740517309 |
+| [PJeLdVAyPbcMDwU597Ae6cdxg5xwN59BeU](https://chainz.cryptoid.info/ppc/address.dws?PJeLdVAyPbcMDwU597Ae6cdxg5xwN59BeU.htm) | PF2nfY2NHUWzYUdqMvW5ZAaBUkMQhMQBBw | 129.473852 | 1294.738520 | 0.000000 | 1740517290 |
+| [PEBZjE47xtH2LJwXL9JyzYZjh2Qm3cgGpd](https://chainz.cryptoid.info/ppc/address.dws?PEBZjE47xtH2LJwXL9JyzYZjh2Qm3cgGpd.htm) | P9TXiNWp3DjhQYBv83vJCSSqrFpRkmXYPs | 122.622972 | 1226.229720 | 0.000000 | 1740517259 |
 | [PUYpCfe9UFpe6Hq3SGbWih5JKBrVtBH94m](https://chainz.cryptoid.info/ppc/address.dws?PUYpCfe9UFpe6Hq3SGbWih5JKBrVtBH94m.htm) | PM5NWU3a1ZW4bZcFjqqvai39zxxM644qWZ | 158.592152 | 1585.921520 | 0.000000 | 1740517168 |
 | [PGJPvQxm4wtAXS7YZ3puMkARZcU513yymx](https://chainz.cryptoid.info/ppc/address.dws?PGJPvQxm4wtAXS7YZ3puMkARZcU513yymx.htm) | PALqFB78wrk6tzVBT1Sm1jjFVbEi4ENGtZ | 156.221323 | 1562.213230 | 0.000000 | 1740517150 |
 | [P9gjQjDSQwAyv9heLBbv5DV4zcoDJq2RxE](https://chainz.cryptoid.info/ppc/address.dws?P9gjQjDSQwAyv9heLBbv5DV4zcoDJq2RxE.htm) | PLabyq2nQWYPs5o8KPWw9K6LoDSjFJDJkP | 123.399158 | 1233.991580 | 0.000000 | 1740517131 |
