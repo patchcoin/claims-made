@@ -4,9 +4,9 @@ https://patchcoin.github.io/claims-made
 
 ## Summary
 
-- **Total Claims:** 388
-- **Total Peercoin Balance:** 2054117.651866 PPC
-- **Total Patchcoin Eligible:** 5759518.496540 PTC
+- **Total Claims:** 392
+- **Total Peercoin Balance:** 2054629.055539 PPC
+- **Total Patchcoin Eligible:** 5764632.533270 PTC
 - **Total Received:** 952800.000000 PTC
 - **Progress Toward 21M Cap:** 4.54%
 
@@ -16,6 +16,10 @@ https://patchcoin.github.io/claims-made
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
+| [PAEVNh9Yb4i8DajcbbyDH4JFDAmie9mtkN](https://chainz.cryptoid.info/ppc/address.dws?PAEVNh9Yb4i8DajcbbyDH4JFDAmie9mtkN.htm) | PGR9QRnz3vheZWxS8g9tfBnF8cSkxCRCAH | 130.221665 | 1302.216650 | 0.000000 | 1740510351 |
+| [PPoTC9Hri1NkexaeAprZNh5qaHU2DahAfR](https://chainz.cryptoid.info/ppc/address.dws?PPoTC9Hri1NkexaeAprZNh5qaHU2DahAfR.htm) | PAh3MrkLMfiP57LN6JDuY24VtYSVdc1MiF | 177.034191 | 1770.341910 | 0.000000 | 1740510329 |
+| [PTz67xjRE5bbELKv8r68Zy4EYarHzrsSUs](https://chainz.cryptoid.info/ppc/address.dws?PTz67xjRE5bbELKv8r68Zy4EYarHzrsSUs.htm) | PJ1DZYLe42TYU4x3mtcuk6mmiecij4Y2Yn | 41.555000 | 415.550000 | 0.000000 | 1740510318 |
+| [PVf3tibszeCnPr6zrJBMhGM98QLMzugHUr](https://chainz.cryptoid.info/ppc/address.dws?PVf3tibszeCnPr6zrJBMhGM98QLMzugHUr.htm) | PX95CnkX4CQ1mJgm12zwDTxN2pomJZ8yPi | 162.592817 | 1625.928170 | 0.000000 | 1740510308 |
 | [PTGZLKy9q63nLrkatM4V4LFz8kwZ4425aM](https://chainz.cryptoid.info/ppc/address.dws?PTGZLKy9q63nLrkatM4V4LFz8kwZ4425aM.htm) | PCfuYCMXijwovK8ij7Gyy13JqdYWBAWbYx | 118.108861 | 1181.088610 | 0.000000 | 1740510288 |
 | [PQiSHyQD1puUzVhDDwDv4whJ2CD8QUcrP2](https://chainz.cryptoid.info/ppc/address.dws?PQiSHyQD1puUzVhDDwDv4whJ2CD8QUcrP2.htm) | PMgBrvSAwvwokT2yumtwyXt8KRSibpepd3 | 140.926088 | 1409.260880 | 0.000000 | 1740510271 |
 | [PEjmgHnX6vwtGoTAqGijTMWALtPUGL6zRd](https://chainz.cryptoid.info/ppc/address.dws?PEjmgHnX6vwtGoTAqGijTMWALtPUGL6zRd.htm) | PSEamp91SVsq4LZUzqCcz9m1hJvumwtuEi | 20.000000 | 200.000000 | 0.000000 | 1740510270 |
