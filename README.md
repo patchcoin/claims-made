@@ -16,7 +16,7 @@ https://patchcoin.github.io/claims-made
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
-| [PSAxFV8Ethvx6SAv23HDwc6R9qh33sniZ7](https://chainz.cryptoid.info/ppc/address.dws?PSAxFV8Ethvx6SAv23HDwc6R9qh33sniZ7.htm) | PSforGB5BWUurPDBLv7jRFC3iWsQiRu7aA | 3840.611823 | 38406.118230 | 0.000000 | 1740498635 |
+| [PSAxFV8Ethvx6SAv23HDwc6R9qh33sniZ7](https://chainz.cryptoid.info/ppc/address.dws?PSAxFV8Ethvx6SAv23HDwc6R9qh33sniZ7.htm) | PSforGB5BWUurPDBLv7jRFC3iWsQiRu7aA | 3840.611823 | 38406.118230 | 0.000000 | 1740498643 |
 | [PL3uaEP1FuagQqjqtp61yjpKqFmijwNLg9](https://chainz.cryptoid.info/ppc/address.dws?PL3uaEP1FuagQqjqtp61yjpKqFmijwNLg9.htm) | P9gZBfbRygdr7K2Na2ZE6ko7iiEkGDvobT | 18379.994559 | 50000.000000 | 0.000000 | 1740498532 |
 | [P9A1WKmtxe3rtxhjkpzRhnW1y5aE18bAse](https://chainz.cryptoid.info/ppc/address.dws?P9A1WKmtxe3rtxhjkpzRhnW1y5aE18bAse.htm) | PX4q1tAVHFmRszGbWfB7imsSTEQrudG8Ke | 6379.233267 | 50000.000000 | 0.000000 | 1740498382 |
 | [PVHpmd6gRf29MpfsMsYtULfj76Y5gxrMQM](https://chainz.cryptoid.info/ppc/address.dws?PVHpmd6gRf29MpfsMsYtULfj76Y5gxrMQM.htm) | PWgibFSZdGsbi9o8z3yvFGduWdtWUBaSBB | 358.697067 | 3586.970670 | 0.000000 | 1740498302 |
