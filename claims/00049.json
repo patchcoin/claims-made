@@ -1,0 +1,9 @@
+{
+  "peercoin_address": "PLHVb7M49HA5RxBB5S9mmz4nAfN4Q2dN2L",
+  "patchcoin_address": "PAMPAZYWGRoGohTaQUze6FtZkAHm1bWTH7",
+  "signature": "IER5L73uUbWEEEF2VgbLwVjuAOVqMdC7lnmloTzCTqoNW7+tpMo2NL/+vg3Aj7ZNVFMyMHDc1f8/QKaghUQfiBg=",
+  "peercoin_balance": 17869.173010,
+  "patchcoin_eligible": 50000.000000,
+  "total_received": 50000.000000,
+  "nTime": 1740289023
+}

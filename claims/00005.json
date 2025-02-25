@@ -1,0 +1,9 @@
+{
+  "peercoin_address": "pc1pyxr9q767ft6pn0cdw6g90j2vq8sjnkjndhfs0587quau4gw5s8uq32gw6x",
+  "patchcoin_address": "PT7sN6uE9tCqgdTVfYuuEa1Ek7Wxgc8coZ",
+  "signature": "03000000000101b9419c87ef37ae6090f54bc65bf0f33baed36f1cf030b3efd2d1a67f55cf5e250200000000ffffffff0180969800000000001976a914cb404ecf5992885e4e2c9bb199532a1a89a93e2a88ac0140a1af092000fb47f8a653e7e12143d8cc162fd65a99f4707c82ff24f36f5cddbfe73f8a5e8de1c99f38d7ce49c4c23ae340d8fdba50e507bb83cb26b34af611de00000000",
+  "peercoin_balance": 10.000000,
+  "patchcoin_eligible": 100.000000,
+  "total_received": 100.000000,
+  "nTime": 1740273656
+}
