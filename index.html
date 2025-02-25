@@ -238,7 +238,9 @@
 
     async function fetchData() {
         try {
-            const response = await fetch(DATA_URL);
+            const response = await fetch(DATA_URL, {
+                cache: "no-cache"
+            });
             const data = await response.json();
             return data;
         } catch (error) {
