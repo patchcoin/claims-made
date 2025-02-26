@@ -4,9 +4,9 @@ https://patchcoin.github.io/claims-made
 
 ## Summary
 
-- **Total Claims:** 497
-- **Total Peercoin Balance:** 2800576.972320 PPC
-- **Total Patchcoin Eligible:** 7242985.230150 PTC
+- **Total Claims:** 501
+- **Total Peercoin Balance:** 2826246.330235 PPC
+- **Total Patchcoin Eligible:** 7297784.255540 PTC
 - **Total Received:** 1286400.000000 PTC
 - **Progress Toward 21M Cap:** 6.13%
 
@@ -16,6 +16,10 @@ https://patchcoin.github.io/claims-made
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
+| [PMczaPd5mKNFpeLAbVsaeobaqJcJWZ2dax](https://chainz.cryptoid.info/ppc/address.dws?PMczaPd5mKNFpeLAbVsaeobaqJcJWZ2dax.htm) | PJTgnYowSzUqg15tUNuAc1uMfFNHR2VLjz | 25189.455376 | 50000.000000 | 0.000000 | 1740591361 |
+| [P9AMuVr286KxtmUSFMBNtXu6nRr8YdrKWb](https://chainz.cryptoid.info/ppc/address.dws?P9AMuVr286KxtmUSFMBNtXu6nRr8YdrKWb.htm) | PD9ptXAB9hVucsT4VmH5ZfYsoPgQEVycLF | 160.279022 | 1602.790220 | 0.000000 | 1740591353 |
+| [PMaDmXH6h8V31q7ZJEJgkWpQtkaJb6nNnB](https://chainz.cryptoid.info/ppc/address.dws?PMaDmXH6h8V31q7ZJEJgkWpQtkaJb6nNnB.htm) | PVz7sexshJ7DhFMDD7HG7DoPVfWij73Vjw | 172.441551 | 1724.415510 | 0.000000 | 1740591330 |
+| [PJuHvFRPu9oa454szc1PATvZ9w5mT3ba6b](https://chainz.cryptoid.info/ppc/address.dws?PJuHvFRPu9oa454szc1PATvZ9w5mT3ba6b.htm) | PTnaFm7sZrukpg7awFyEYpdtuQkjiJdDHY | 147.181966 | 1471.819660 | 0.000000 | 1740591303 |
 | [PAyUpJzgLJZhGLNQbNqTFPeiChMTQVzdbW](https://chainz.cryptoid.info/ppc/address.dws?PAyUpJzgLJZhGLNQbNqTFPeiChMTQVzdbW.htm) | PR9ds69aqsx6DS63BRXC3M5Dyw9ii6Ehrd | 118.131407 | 1181.314070 | 0.000000 | 1740591285 |
 | [PEfWPgm5fpPJ2JVwWYNdJAqsQrgj4iU7Ph](https://chainz.cryptoid.info/ppc/address.dws?PEfWPgm5fpPJ2JVwWYNdJAqsQrgj4iU7Ph.htm) | PT8nCctdPhNonwUkCz3C72RgJjavhvcw1K | 3735.500000 | 37355.000000 | 0.000000 | 1740591279 |
 | [PCMUTyhoEAqsUBvTNw4rPTRoh6hcZQHrfe](https://chainz.cryptoid.info/ppc/address.dws?PCMUTyhoEAqsUBvTNw4rPTRoh6hcZQHrfe.htm) | PJ1A8e6JUvVvsbkdUkAHZWhwXibPR4vV2D | 161.611684 | 1616.116840 | 0.000000 | 1740591264 |
