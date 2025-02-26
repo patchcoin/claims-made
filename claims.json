@@ -1,5 +1,14 @@
 [
   {
+    "peercoin_address": "PPTybFwYfDoSmsGNwdsc2vJag1C4HMqzvJ",
+    "patchcoin_address": "PRRH3d82zy3jBGqLvE2WQytpND7Y7S6ma8",
+    "signature": "H8JicZyoZRdDWm/GahIwuWgTo4pInScLYO85xUG+Qtw/MaKlkR62mUcPFAn5yxTPMdExw/KfTF6FzXviufPo5WM=",
+    "peercoin_balance": 27300.590839,
+    "patchcoin_eligible": 50000.000000,
+    "total_received": 0.000000,
+    "nTime": 1740583506
+  },
+  {
     "peercoin_address": "PUZrLtnrzKeSCeFnBf4ZSdaqe89BHjZM3y",
     "patchcoin_address": "PAkGZZven3gZvLXDeXmLH6KKjyPGPX1z7S",
     "signature": "IJ/IJgQUirjbbLeaMknr9cAPz4JUWKhYrc9NqBgsXM2DbfKmG8O8VSPZ818O1KEOl3IDt7o1HmqP291jSEqYc1k=",
@@ -3569,7 +3578,7 @@
     "signature": "H0oUIP6nUhflD7fXp9ERFu8U9MaEnylacwiJOclR7NWhJEPXrnoRL1HuT0W2wz7gA9E+G1DtD+hYmv6fQpZK8FY=",
     "peercoin_balance": 5025.696313,
     "patchcoin_eligible": 50000.000000,
-    "total_received": 36306.802920,
+    "total_received": 38706.802920,
     "nTime": 1740290981
   },
   {
@@ -3834,21 +3843,21 @@
     "nTime": 1740284669
   },
   {
-    "peercoin_address": "PKfW12fCLJYWg1juSEA5RvSg8Tszzdkq9q",
-    "patchcoin_address": "PDaFAUdxR8Jqz4a5tgmj16NmzieSQhFpq8",
-    "signature": "H5bTbWSV6i+ZAMEfGzD3NuYN47FlIsAr4dDyYZNUwzZObfGZgVdbVe6YNm3sZRys+lg0BSsd1uBhHwuzPVkehmA=",
-    "peercoin_balance": 915.252001,
-    "patchcoin_eligible": 9152.520010,
-    "total_received": 9152.520010,
-    "nTime": 1740284644
-  },
-  {
     "peercoin_address": "PKPa7D2Xv2CWgvVVkMZbQYTYWjoFb47Q85",
     "patchcoin_address": "PGwhQvEYwhbKmt3jsBz8ojMfizNUfPKuya",
     "signature": "IApatrD25CB5qNgp0Xy5LBN6cT8weayVrUUIg6CPxrV7XX2TBdxKdas3SUzv5XPC7+dHG5YLKuqFKvdM8/nDCu0=",
     "peercoin_balance": 133.630302,
     "patchcoin_eligible": 1336.303020,
     "total_received": 1336.303020,
+    "nTime": 1740284644
+  },
+  {
+    "peercoin_address": "PKfW12fCLJYWg1juSEA5RvSg8Tszzdkq9q",
+    "patchcoin_address": "PDaFAUdxR8Jqz4a5tgmj16NmzieSQhFpq8",
+    "signature": "H5bTbWSV6i+ZAMEfGzD3NuYN47FlIsAr4dDyYZNUwzZObfGZgVdbVe6YNm3sZRys+lg0BSsd1uBhHwuzPVkehmA=",
+    "peercoin_balance": 915.252001,
+    "patchcoin_eligible": 9152.520010,
+    "total_received": 9152.520010,
     "nTime": 1740284644
   },
   {
