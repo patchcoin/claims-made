@@ -4,9 +4,9 @@ https://patchcoin.github.io/claims-made
 
 ## Summary
 
-- **Total Claims:** 413
-- **Total Peercoin Balance:** 2058096.777830 PPC
-- **Total Patchcoin Eligible:** 5799309.756180 PTC
+- **Total Claims:** 417
+- **Total Peercoin Balance:** 2058307.125030 PPC
+- **Total Patchcoin Eligible:** 5801413.228180 PTC
 - **Total Received:** 1065600.000000 PTC
 - **Progress Toward 21M Cap:** 5.07%
 
@@ -16,6 +16,10 @@ https://patchcoin.github.io/claims-made
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
+| [PNK8M6BuSg6bBtnUibE1yJhX7m69tTwZfK](https://chainz.cryptoid.info/ppc/address.dws?PNK8M6BuSg6bBtnUibE1yJhX7m69tTwZfK.htm) | PPAorrwDyVq8oz386cpZC2xoe5WbfTQyBT | 18.210000 | 182.100000 | 0.000000 | 1740538387 |
+| [PRj1hGLD7G5yQ7VWo9QVfHXLWX5ixbuRmH](https://chainz.cryptoid.info/ppc/address.dws?PRj1hGLD7G5yQ7VWo9QVfHXLWX5ixbuRmH.htm) | PHEb2xyx165386G6chqtAK2dEYCXrgxhJa | 48.627200 | 486.272000 | 0.000000 | 1740538339 |
+| [PHAUb5f7L9fPmuvYs8o17SneMcQgyTbm9J](https://chainz.cryptoid.info/ppc/address.dws?PHAUb5f7L9fPmuvYs8o17SneMcQgyTbm9J.htm) | PEoxHTRvrF634nt3seVfA9DkMmoTxU1gMb | 50.000000 | 500.000000 | 0.000000 | 1740538293 |
+| [PPRncZEaao28usbR47xsSaUWyVSFQTQPVs](https://chainz.cryptoid.info/ppc/address.dws?PPRncZEaao28usbR47xsSaUWyVSFQTQPVs.htm) | P9GwpLneoPitEqrHXLMwwa6RoRgodgpPwa | 93.510000 | 935.100000 | 0.000000 | 1740538238 |
 | [PMqTXgnrrZbvd6e9L845XWJE79547wLujh](https://chainz.cryptoid.info/ppc/address.dws?PMqTXgnrrZbvd6e9L845XWJE79547wLujh.htm) | PV2nd11WaQVAGMnHKeSytmNVpTu2GRTnh6 | 2.972362 | 29.723620 | 0.000000 | 1740532798 |
 | [PQjpbWARUs2eWD5RM79xYksaiHiNDMe7oE](https://chainz.cryptoid.info/ppc/address.dws?PQjpbWARUs2eWD5RM79xYksaiHiNDMe7oE.htm) | PLB1uTkJmAxKAtyGqBr57ED9pS3ZMrYB8P | 562.837082 | 5628.370820 | 0.000000 | 1740531578 |
 | [PHAJHUiC44Uuqc8crmF3DD4EzwZkCgceLa](https://chainz.cryptoid.info/ppc/address.dws?PHAJHUiC44Uuqc8crmF3DD4EzwZkCgceLa.htm) | P9iA1ScuMNPHWMj27nhvSqVQLwMofaEqRA | 142.583760 | 1425.837600 | 0.000000 | 1740531529 |
