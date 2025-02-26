@@ -14,7 +14,7 @@
             --border-color: #e5e7eb;
             --text-primary: #1f2937;
             --text-secondary: #6b7280;
-	    --fill-color: rgba(22, 163, 44, 0.1);
+            --fill-color: rgba(22, 163, 44, 0.1);
         }
         * {
             margin: 0;
@@ -136,6 +136,80 @@
             border: 1px solid var(--border-color);
             font-size: 0.875rem;
         }
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .pagination button {
+            padding: 0.4rem 0.7rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-background);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+        .pagination button:hover {
+            background: var(--background-color);
+        }
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .pagination-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(36px);
+        }
         @media (max-width: 768px) {
             body { padding: 0.5rem; }
             .container { padding: 0.5rem; }
@@ -143,11 +217,13 @@
             h1 { font-size: 1.5rem; }
             #chartContainer { height: 300px; }
             .progress { height: 0.75rem; }
+            .pagination button { padding: 0.4rem 0.8rem; font-size: 0.875rem; }
         }
         @media (max-width: 480px) {
             #chartContainer { height: 250px; }
             .progress-label { font-size: 0.875rem; }
             .progress-subtitle { font-size: 0.75rem; }
+            .pagination { flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -181,6 +257,20 @@
             </div>
         </div>
 
+        <div class="pagination-container">
+            <div class="pagination-toggle">
+                <label for="paginationToggle">Show all records</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="paginationToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div id="paginationControls">
+                <!-- Will be populated via JavaScript -->
+            </div>
+        </div>
+
         <div class="table-container">
             <table id="claimsTable">
                 <thead>
@@ -208,6 +298,13 @@
 
     window.toggleStates = {};
 
+        let currentPage = 1;
+    let totalPages = 1;
+    let rowsPerPage = 10;
+    let allClaimsData = [];
+    let paginatedData = [];
+    let inProgressIndex = -1;
+    let paginationEnabled = true; 
     function formatNumber(num) {
         return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
     }
@@ -236,6 +333,36 @@
       `;
     }
 
+    function findInProgressIndex(data) {
+                return data.findIndex(item => item.total_received > 0 && item.total_received < item.patchcoin_eligible);
+    }
+
+    function getPageForIndex(index) {
+        if (index < 0) return 1;
+        return Math.floor(index / rowsPerPage) + 1;
+    }
+
+    function paginateData() {
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        paginatedData = allClaimsData.slice(startIndex, endIndex);
+
+                const paginationInfo = document.getElementById('paginationInfo');
+        if (paginationInfo) {
+            paginationInfo.textContent = `${currentPage}/${totalPages}`;
+        }
+
+                const firstButton = document.getElementById('firstPage');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+        const lastButton = document.getElementById('lastPage');
+
+        if (firstButton) firstButton.disabled = currentPage === 1;
+        if (prevButton) prevButton.disabled = currentPage === 1;
+        if (nextButton) nextButton.disabled = currentPage === totalPages;
+        if (lastButton) lastButton.disabled = currentPage === totalPages;
+    }
+
     async function fetchData() {
         try {
             const response = await fetch(DATA_URL, {
@@ -249,10 +376,164 @@
         }
     }
 
+    function togglePaginationControls() {
+        const controlsContainer = document.getElementById('paginationControls');
+        controlsContainer.innerHTML = '';
+
+        if (paginationEnabled) {
+                        const paginationDiv = document.createElement('div');
+            paginationDiv.className = 'pagination';
+
+            const firstButton = document.createElement('button');
+            firstButton.id = 'firstPage';
+            firstButton.textContent = 'First';
+            firstButton.addEventListener('click', () => {
+                currentPage = 1;
+                updateTable();
+            });
+
+            const prevButton = document.createElement('button');
+            prevButton.id = 'prevPage';
+            prevButton.textContent = 'Prev';
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateTable();
+                }
+            });
+
+            const pageInfo = document.createElement('span');
+            pageInfo.className = 'pagination-info';
+            pageInfo.id = 'paginationInfo';
+            pageInfo.textContent = `${currentPage}/${totalPages}`;
+
+            const nextButton = document.createElement('button');
+            nextButton.id = 'nextPage';
+            nextButton.textContent = 'Next';
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateTable();
+                }
+            });
+
+            const lastButton = document.createElement('button');
+            lastButton.id = 'lastPage';
+            lastButton.textContent = 'Last';
+            lastButton.addEventListener('click', () => {
+                currentPage = totalPages;
+                updateTable();
+            });
+
+                        firstButton.disabled = currentPage === 1;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            lastButton.disabled = currentPage === totalPages;
+
+                        paginationDiv.appendChild(firstButton);
+            paginationDiv.appendChild(prevButton);
+            paginationDiv.appendChild(pageInfo);
+            paginationDiv.appendChild(nextButton);
+            paginationDiv.appendChild(lastButton);
+
+                        controlsContainer.appendChild(paginationDiv);
+        } else {
+                        const placeholder = document.createElement('div');
+            placeholder.className = 'pagination-placeholder';
+            controlsContainer.appendChild(placeholder);
+        }
+    }
+
+    function initPagination() {
+                const savedPaginationState = localStorage.getItem('patchcoinPaginationEnabled');
+        if (savedPaginationState !== null) {
+            paginationEnabled = savedPaginationState === 'true';
+        }
+
+                const paginationToggle = document.getElementById('paginationToggle');
+        paginationToggle.checked = !paginationEnabled;
+
+                togglePaginationControls();
+
+                paginationToggle.addEventListener('change', function() {
+            paginationEnabled = !this.checked;
+            localStorage.setItem('patchcoinPaginationEnabled', paginationEnabled.toString());
+            togglePaginationControls();
+            updateTable();
+        });
+    }
+
+    function updateTable() {
+        const dataToShow = paginationEnabled ? (paginateData(), paginatedData) : allClaimsData;
+
+        const tableBody = document.querySelector("#claimsTable tbody");
+        tableBody.innerHTML = "";
+
+        dataToShow.forEach((item, index) => {
+            const key = item.peercoin_address + '-' + item.patchcoin_address + '-' + item.nTime;
+            const isInProgress = item.total_received > 0 && item.total_received < item.patchcoin_eligible;
+
+            const row = document.createElement("tr");
+
+
+            const fillPercentage = item.patchcoin_eligible > 0
+                ? Math.min((item.total_received / item.patchcoin_eligible) * 100, 100)
+                : 0;
+            row.style.background = `linear-gradient(to right, var(--fill-color) ${fillPercentage}%, transparent ${fillPercentage}%)`;
+
+            const date = new Date(item.nTime * 1000).toLocaleString();
+            row.innerHTML = `
+          <td>${date}</td>
+          <td class="truncate" title="${item.peercoin_address}">${truncatedAddress(item.peercoin_address)}</td>
+          <td class="truncate" title="${item.patchcoin_address}">${truncatedAddress(item.patchcoin_address)}</td>
+          <td class="number">${formatNumber(item.peercoin_balance)}</td>
+          <td class="number">${formatNumber(item.patchcoin_eligible)}</td>
+          <td class="number">${formatNumber(item.total_received)}</td>
+          <td><button class="toggleRow" data-key="${key}">Toggle JSON</button></td>
+        `;
+            tableBody.appendChild(row);
+
+            const detailRow = document.createElement("tr");
+            detailRow.style.display = window.toggleStates[key] ? "table-row" : "none";
+            const detailCell = document.createElement("td");
+            detailCell.colSpan = 7;
+            detailCell.style.background = "#f0f0f0";
+            detailCell.innerHTML = `<pre style="margin:0;">${JSON.stringify(item, null, 2)}</pre>`;
+            detailRow.appendChild(detailCell);
+            tableBody.appendChild(detailRow);
+        });
+
+        document.querySelectorAll(".toggleRow").forEach(button => {
+            button.addEventListener("click", function() {
+                const key = this.dataset.key;
+                const currentRow = this.parentElement.parentElement;
+                const detailRow = currentRow.nextElementSibling;
+                if (detailRow.style.display === "none" || detailRow.style.display === "") {
+                    detailRow.style.display = "table-row";
+                    window.toggleStates[key] = true;
+                } else {
+                    detailRow.style.display = "none";
+                    window.toggleStates[key] = false;
+                }
+            });
+        });
+    }
+
     async function updateDashboard() {
         const data = await fetchData();
         data.sort((a, b) => a.nTime - b.nTime);
         window.sortedClaims = data;
+        allClaimsData = data;
+
+                totalPages = Math.ceil(data.length / rowsPerPage);
+
+                inProgressIndex = findInProgressIndex(data);
+
+                if (inProgressIndex >= 0) {
+            currentPage = getPageForIndex(inProgressIndex);
+        } else {
+            currentPage = 1;         }
+
         const times = [];
         const cumulativeEligible = [];
         const cumulativeReceived = [];
@@ -363,57 +644,14 @@
         document.getElementById('receivedSubtitle').textContent =
             `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
 
-        const tableBody = document.querySelector("#claimsTable tbody");
-        tableBody.innerHTML = "";
-
-        data.forEach((item, index) => {
-            const key = item.peercoin_address + '-' + item.patchcoin_address + '-' + item.nTime;
-
-            const row = document.createElement("tr");
-            const fillPercentage = item.patchcoin_eligible > 0
-                ? Math.min((item.total_received / item.patchcoin_eligible) * 100, 100)
-                : 0;
-            row.style.background = `linear-gradient(to right, var(--fill-color) ${fillPercentage}%, transparent ${fillPercentage}%)`;
-            const date = new Date(item.nTime * 1000).toLocaleString();
-            row.innerHTML = `
-          <td>${date}</td>
-          <td class="truncate" title="${item.peercoin_address}">${truncatedAddress(item.peercoin_address)}</td>
-          <td class="truncate" title="${item.patchcoin_address}">${truncatedAddress(item.patchcoin_address)}</td>
-          <td class="number">${formatNumber(item.peercoin_balance)}</td>
-          <td class="number">${formatNumber(item.patchcoin_eligible)}</td>
-          <td class="number">${formatNumber(item.total_received)}</td>
-          <td><button class="toggleRow" data-key="${key}">Toggle JSON</button></td>
-        `;
-            tableBody.appendChild(row);
-
-            const detailRow = document.createElement("tr");
-            detailRow.style.display = window.toggleStates[key] ? "table-row" : "none";
-            const detailCell = document.createElement("td");
-            detailCell.colSpan = 7;
-            detailCell.style.background = "#f0f0f0";
-            detailCell.innerHTML = `<pre style="margin:0;">${JSON.stringify(item, null, 2)}</pre>`;
-            detailRow.appendChild(detailCell);
-            tableBody.appendChild(detailRow);
-        });
-
-        document.querySelectorAll(".toggleRow").forEach(button => {
-            button.addEventListener("click", function() {
-                const key = this.dataset.key;
-                const currentRow = this.parentElement.parentElement;
-                const detailRow = currentRow.nextElementSibling;
-                if (detailRow.style.display === "none" || detailRow.style.display === "") {
-                    detailRow.style.display = "table-row";
-                    window.toggleStates[key] = true;
-                } else {
-                    detailRow.style.display = "none";
-                    window.toggleStates[key] = false;
-                }
-            });
-        });
+        updateTable();
     }
 
-    updateDashboard();
-    setInterval(updateDashboard, 60000);
+        initPagination();
+
+        updateDashboard();
+
+        setInterval(updateDashboard, 60000);
 
     window.addEventListener('resize', () => { if (chart) { chart.resize(); } });
 </script>
