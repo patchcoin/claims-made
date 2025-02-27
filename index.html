@@ -1,660 +1,730 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patchcoin Claims</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --success-color: #16a34a;
-            --background-color: #f8f9fa;
-            --card-background: #ffffff;
-            --border-color: #e5e7eb;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --fill-color: rgba(22, 163, 44, 0.1);
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--background-color);
-            color: var(--text-primary);
-            line-height: 1.5;
-            padding: 1rem;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-        .card {
-            background: var(--card-background);
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        h1 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            text-align: center;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-        #chartContainer {
-            position: relative;
-            height: 400px;
-            width: 100%;
-            margin-bottom: 2rem;
-        }
-        .progress-container {
-            margin-top: 2rem;
-        }
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .progress-value {
-            font-weight: 600;
-        }
-        .progress-eligible {
-            color: var(--primary-color);
-        }
-        .progress-received {
-            color: var(--success-color);
-        }
-        .progress {
-            background: #e9ecef;
-            border-radius: 9999px;
-            overflow: hidden;
-            height: 1rem;
-        }
-        .progress-bar {
-            height: 100%;
-            transition: width 0.5s ease;
-            border-radius: 9999px;
-        }
-        .progress-group {
-            margin-bottom: 1.5rem;
-        }
-        #capProgressEligible {
-            background: var(--primary-color);
-        }
-        #capProgressReceived {
-            background: var(--success-color);
-        }
-        .progress-subtitle {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            text-align: right;
-            margin-top: 0.25rem;
-        }
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            table-layout: auto; /* Allow columns to fit content */
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            white-space: nowrap; /* Prevent text from wrapping */
-        }
-        th.number, td.number {
-            text-align: right;
-        }
-        th {
-            background: #f2f2f2;
-        }
-        .truncate {
-            max-width: 200px; /* Increased max-width for better readability */
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        .chart-tooltip {
-            background: var(--card-background);
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--border-color);
-            font-size: 0.875rem;
-        }
-        .pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        .pagination button {
-            padding: 0.4rem 0.7rem;
-            border: 1px solid var(--border-color);
-            background: var(--card-background);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-        }
-        .pagination button:hover {
-            background: var(--background-color);
-        }
-        .pagination button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .pagination-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        .pagination-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 24px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .toggle-slider {
-            background-color: var(--primary-color);
-        }
-        input:checked + .toggle-slider:before {
-            transform: translateX(36px);
-        }
-        @media (max-width: 768px) {
-            body { padding: 0.5rem; }
-            .container { padding: 0.5rem; }
-            .card { padding: 1rem; }
-            h1 { font-size: 1.5rem; }
-            #chartContainer { height: 300px; }
-            .progress { height: 0.75rem; }
-            .pagination button { padding: 0.4rem 0.8rem; font-size: 0.875rem; }
-        }
-        @media (max-width: 480px) {
-            #chartContainer { height: 250px; }
-            .progress-label { font-size: 0.875rem; }
-            .progress-subtitle { font-size: 0.75rem; }
-            .pagination { flex-wrap: wrap; }
-        }
+      :root {
+        --primary-color: #2563eb;
+        --success-color: #16a34a;
+        --background-color: #f8f9fa;
+        --card-background: #ffffff;
+        --border-color: #e5e7eb;
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --fill-color: rgba(22, 163, 44, 0.1);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--background-color);
+        color: var(--text-primary);
+        line-height: 1.5;
+        padding: 1rem;
+      }
+      
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      
+      .card {
+        background: var(--card-background);
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+      }
+      
+      #chartContainer {
+        position: relative;
+        height: 400px;
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+      
+      .progress-container {
+        margin-top: 2rem;
+      }
+      
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      
+      .progress-value {
+        font-weight: 600;
+      }
+      
+      .progress-eligible {
+        color: var(--primary-color);
+      }
+      
+      .progress-received {
+        color: var(--success-color);
+      }
+      
+      .progress {
+        background: #e9ecef;
+        border-radius: 9999px;
+        overflow: hidden;
+        height: 1rem;
+      }
+      
+      .progress-bar {
+        height: 100%;
+        transition: width 0.5s ease;
+        border-radius: 9999px;
+      }
+      
+      .progress-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      #capProgressEligible {
+        background: var(--primary-color);
+      }
+      
+      #capProgressReceived {
+        background: var(--success-color);
+      }
+      
+      .progress-subtitle {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+      
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        table-layout: auto;
+      }
+      
+      table, th, td {
+        border: 1px solid #ddd;
+      }
+      
+      th, td {
+        padding: 8px;
+        text-align: left;
+        white-space: nowrap;
+      }
+      
+      th.number, td.number {
+        text-align: right;
+      }
+      
+      th {
+        background: #f2f2f2;
+      }
+      
+      .truncate {
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      
+      .chart-tooltip {
+        background: var(--card-background);
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+        font-size: 0.875rem;
+      }
+      
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .pagination button {
+        padding: 0.4rem 0.7rem;
+        border: 1px solid var(--border-color);
+        background: var(--card-background);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--text-primary);
+        font-size: 0.85rem;
+      }
+      
+      .pagination button:hover {
+        background: var(--background-color);
+      }
+      
+      .pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      
+      .pagination-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      .pagination-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 24px;
+      }
+      
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+      }
+      
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      
+      input:checked + .toggle-slider {
+        background-color: var(--primary-color);
+      }
+      
+      input:checked + .toggle-slider:before {
+        transform: translateX(36px);
+      }
+      
+      .search-container input {
+        padding: 0.5rem 1rem;
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      
+      .controls-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      @media (max-width: 768px) {
+        body { padding: 0.5rem; }
+        .container { padding: 0.5rem; }
+        .card { padding: 1rem; }
+        h1 { font-size: 1.5rem; }
+        #chartContainer { height: 300px; }
+        .progress { height: 0.75rem; }
+        .pagination button { padding: 0.4rem 0.8rem; font-size: 0.875rem; }
+      }
+      
+      @media (max-width: 480px) {
+        #chartContainer { height: 250px; }
+        .progress-label { font-size: 0.875rem; }
+        .progress-subtitle { font-size: 0.75rem; }
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <div class="card">
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
         <h1>Patchcoin Claims</h1>
         <div id="chartContainer">
-            <canvas id="claimsChart"></canvas>
+          <canvas id="claimsChart"></canvas>
         </div>
         <div class="progress-container">
-            <div class="progress-group">
-                <div class="progress-label">
-                    <span>Eligible Progress</span>
-                    <span class="progress-value progress-eligible" id="eligiblePercent">0%</span>
-                </div>
-                <div class="progress">
-                    <div id="capProgressEligible" class="progress-bar"></div>
-                </div>
-                <div class="progress-subtitle" id="eligibleSubtitle">0 / 21,000,000</div>
+          <div class="progress-group">
+            <div class="progress-label">
+              <span>Eligible Progress</span>
+              <span class="progress-value progress-eligible" id="eligiblePercent">0%</span>
             </div>
-            <div class="progress-group">
-                <div class="progress-label">
-                    <span>Received Progress</span>
-                    <span class="progress-value progress-received" id="receivedPercent">0%</span>
-                </div>
-                <div class="progress">
-                    <div id="capProgressReceived" class="progress-bar"></div>
-                </div>
-                <div class="progress-subtitle" id="receivedSubtitle">0 / 21,000,000</div>
+            <div class="progress">
+              <div id="capProgressEligible" class="progress-bar"></div>
             </div>
+            <div class="progress-subtitle" id="eligibleSubtitle">0 / 21,000,000</div>
+          </div>
+          <div class="progress-group">
+            <div class="progress-label">
+              <span>Received Progress</span>
+              <span class="progress-value progress-received" id="receivedPercent">0%</span>
+            </div>
+            <div class="progress">
+              <div id="capProgressReceived" class="progress-bar"></div>
+            </div>
+            <div class="progress-subtitle" id="receivedSubtitle">0 / 21,000,000</div>
+          </div>
         </div>
-
-        <div class="pagination-container">
+        <div class="controls-wrapper">
+          <div class="pagination-container">
             <div class="pagination-toggle">
-                <label for="paginationToggle">Show all claims</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="paginationToggle">
-                    <span class="toggle-slider"></span>
-                </label>
+              <label for="paginationToggle">Show all claims</label>
+              <label class="toggle-switch">
+                <input type="checkbox" id="paginationToggle">
+                <span class="toggle-slider"></span>
+              </label>
             </div>
-
-            <div id="paginationControls">
-                <!-- Will be populated via JavaScript -->
-            </div>
+            <div id="paginationControls"></div>
+          </div>
+          <div class="search-container">
+            <input id="searchInput" type="text" placeholder="Search...">
+          </div>
         </div>
-
         <div class="table-container">
-            <table id="claimsTable">
-                <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Peercoin Address</th>
-                    <th>Patchcoin Address</th>
-                    <th class="number">Peercoin Balance</th>
-                    <th class="number">Patchcoin Eligible</th>
-                    <th class="number">Total Received</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+          <table id="claimsTable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Peercoin Address</th>
+                <th>Patchcoin Address</th>
+                <th class="number">Peercoin Balance</th>
+                <th class="number">Patchcoin Eligible</th>
+                <th class="number">Total Received</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
+      </div>
     </div>
-</div>
-
-<script>
-    const DATA_URL = 'https://raw.githubusercontent.com/patchcoin/claims-made/refs/heads/main/claims.json';
-    const CAP = 21000000;
-    let chart;
-
-    window.toggleStates = {};
-
-        let currentPage = 1;
-    let totalPages = 1;
-    let rowsPerPage = 10;
-    let allClaimsData = [];
-    let paginatedData = [];
-    let inProgressIndex = -1;
-    let paginationEnabled = true; 
-    function formatNumber(num) {
-        return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
-    }
-
-    function truncatedAddress(addr) {
+    <script>
+      const DATA_URL = 'https://raw.githubusercontent.com/patchcoin/claims-made/refs/heads/main/claims.json';
+      const CAP = 21000000;
+      let chart;
+      window.toggleStates = {};
+      
+      let currentPage = 1;
+      let totalPages = 1;
+      let rowsPerPage = 10;
+      let allClaimsData = [];
+      let lastData = null;
+      let paginationEnabled = true;
+      let firstLoad = true;
+      
+      function formatNumber(num) {
+        return new Intl.NumberFormat('en-US', { 
+          minimumFractionDigits: 2, 
+          maximumFractionDigits: 2 
+        }).format(num);
+      }
+      
+      function truncatedAddress(addr) {
         return addr.length > 20 ? addr.slice(0, 20) + "..." : addr;
-    }
-
-    function createTooltipHtml(context) {
+      }
+      
+      function createTooltipHtml(context) {
         if (!context[0]) return '';
         const idx = context[0].dataIndex;
         const claim = window.sortedClaims[idx];
         if (!claim) return '';
         return `
-        <div class="chart-tooltip">
-          <div style="font-weight: 600; margin-bottom: 8px;">${context[0].label}</div>
-          <div style="color: ${context[0].dataset.borderColor};">
-            ${context[0].dataset.label}: ${formatNumber(context[0].parsed.y)}
+          <div class="chart-tooltip">
+            <div style="font-weight: 600; margin-bottom: 8px;">${context[0].label}</div>
+            <div style="color: ${context[0].dataset.borderColor};">
+              ${context[0].dataset.label}: ${formatNumber(context[0].parsed.y)}
+            </div>
+            <div style="margin-top: 8px; font-size: 0.8em; color: #666;">
+              <div>Peercoin: ${truncatedAddress(claim.peercoin_address)}</div>
+              <div>Patchcoin: ${truncatedAddress(claim.patchcoin_address)}</div>
+              <div>Balance: ${formatNumber(claim.peercoin_balance)}</div>
+            </div>
           </div>
-          <div style="margin-top: 8px; font-size: 0.8em; color: #666;">
-            <div>Peercoin: ${truncatedAddress(claim.peercoin_address)}</div>
-            <div>Patchcoin: ${truncatedAddress(claim.patchcoin_address)}</div>
-            <div>Balance: ${formatNumber(claim.peercoin_balance)}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function findInProgressIndex(data) {
-                return data.findIndex(item => item.total_received > 0 && item.total_received < item.patchcoin_eligible);
-    }
-
-    function getPageForIndex(index) {
+        `;
+      }
+      
+      function getPageForIndex(index) {
         if (index < 0) return 1;
         return Math.floor(index / rowsPerPage) + 1;
-    }
-
-    function paginateData() {
+      }
+      
+      function paginateData(data) {
         const startIndex = (currentPage - 1) * rowsPerPage;
         const endIndex = startIndex + rowsPerPage;
-        paginatedData = allClaimsData.slice(startIndex, endIndex);
-
-                const paginationInfo = document.getElementById('paginationInfo');
-        if (paginationInfo) {
-            paginationInfo.textContent = `${currentPage}/${totalPages}`;
-        }
-
-                const firstButton = document.getElementById('firstPage');
-        const prevButton = document.getElementById('prevPage');
-        const nextButton = document.getElementById('nextPage');
-        const lastButton = document.getElementById('lastPage');
-
-        if (firstButton) firstButton.disabled = currentPage === 1;
-        if (prevButton) prevButton.disabled = currentPage === 1;
-        if (nextButton) nextButton.disabled = currentPage === totalPages;
-        if (lastButton) lastButton.disabled = currentPage === totalPages;
-    }
-
-    async function fetchData() {
+        return data.slice(startIndex, endIndex);
+      }
+      
+      function findInProgressIndex(data) {
+        return data.findIndex(item => 
+          item.total_received > 0 && item.total_received < item.patchcoin_eligible
+        );
+      }
+      
+      async function fetchData() {
         try {
-            const response = await fetch(DATA_URL, {
-                cache: "no-cache"
-            });
+          const response = await fetch(DATA_URL, { cache: "no-cache" });
+          if (response.ok) {
             const data = await response.json();
             return data;
+          }
+          console.error("Error fetching data: ", response.status);
+          return [];
         } catch (error) {
-            console.error('Error fetching data:', error);
-            return [];
+          console.error("Error fetching data:", error);
+          return [];
         }
-    }
-
-    function togglePaginationControls() {
+      }
+      
+      function togglePaginationControls() {
         const controlsContainer = document.getElementById('paginationControls');
         controlsContainer.innerHTML = '';
-
+        
         if (paginationEnabled) {
-                        const paginationDiv = document.createElement('div');
-            paginationDiv.className = 'pagination';
-
-            const firstButton = document.createElement('button');
-            firstButton.id = 'firstPage';
-            firstButton.textContent = 'First';
-            firstButton.addEventListener('click', () => {
-                currentPage = 1;
-                updateTable();
-            });
-
-            const prevButton = document.createElement('button');
-            prevButton.id = 'prevPage';
-            prevButton.textContent = 'Prev';
-            prevButton.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updateTable();
-                }
-            });
-
-            const pageInfo = document.createElement('span');
-            pageInfo.className = 'pagination-info';
-            pageInfo.id = 'paginationInfo';
-            pageInfo.textContent = `${currentPage}/${totalPages}`;
-
-            const nextButton = document.createElement('button');
-            nextButton.id = 'nextPage';
-            nextButton.textContent = 'Next';
-            nextButton.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updateTable();
-                }
-            });
-
-            const lastButton = document.createElement('button');
-            lastButton.id = 'lastPage';
-            lastButton.textContent = 'Last';
-            lastButton.addEventListener('click', () => {
-                currentPage = totalPages;
-                updateTable();
-            });
-
-                        firstButton.disabled = currentPage === 1;
-            prevButton.disabled = currentPage === 1;
-            nextButton.disabled = currentPage === totalPages;
-            lastButton.disabled = currentPage === totalPages;
-
-                        paginationDiv.appendChild(firstButton);
-            paginationDiv.appendChild(prevButton);
-            paginationDiv.appendChild(pageInfo);
-            paginationDiv.appendChild(nextButton);
-            paginationDiv.appendChild(lastButton);
-
-                        controlsContainer.appendChild(paginationDiv);
-        } else {
-                        const placeholder = document.createElement('div');
-            placeholder.className = 'pagination-placeholder';
-            controlsContainer.appendChild(placeholder);
-        }
-    }
-
-    function initPagination() {
-                const savedPaginationState = localStorage.getItem('patchcoinPaginationEnabled');
-        if (savedPaginationState !== null) {
-            paginationEnabled = savedPaginationState === 'true';
-        }
-
-                const paginationToggle = document.getElementById('paginationToggle');
-        paginationToggle.checked = !paginationEnabled;
-
-                togglePaginationControls();
-
-                paginationToggle.addEventListener('change', function() {
-            paginationEnabled = !this.checked;
-            localStorage.setItem('patchcoinPaginationEnabled', paginationEnabled.toString());
-            togglePaginationControls();
+          const paginationDiv = document.createElement('div');
+          paginationDiv.className = 'pagination';
+          
+          const firstButton = document.createElement('button');
+          firstButton.id = 'firstPage';
+          firstButton.textContent = 'First';
+          firstButton.addEventListener('click', () => {
+            currentPage = 1;
             updateTable();
+          });
+          
+          const prevButton = document.createElement('button');
+          prevButton.id = 'prevPage';
+          prevButton.textContent = 'Prev';
+          prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+              currentPage--;
+              updateTable();
+            }
+          });
+          
+          const pageInfo = document.createElement('span');
+          pageInfo.className = 'pagination-info';
+          pageInfo.id = 'paginationInfo';
+          pageInfo.textContent = `${currentPage}/${totalPages}`;
+          
+          const nextButton = document.createElement('button');
+          nextButton.id = 'nextPage';
+          nextButton.textContent = 'Next';
+          nextButton.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+              currentPage++;
+              updateTable();
+            }
+          });
+          
+          const lastButton = document.createElement('button');
+          lastButton.id = 'lastPage';
+          lastButton.textContent = 'Last';
+          lastButton.addEventListener('click', () => {
+            currentPage = totalPages;
+            updateTable();
+          });
+          
+          firstButton.disabled = currentPage === 1;
+          prevButton.disabled = currentPage === 1;
+          nextButton.disabled = currentPage === totalPages;
+          lastButton.disabled = currentPage === totalPages;
+          
+          paginationDiv.appendChild(firstButton);
+          paginationDiv.appendChild(prevButton);
+          paginationDiv.appendChild(pageInfo);
+          paginationDiv.appendChild(nextButton);
+          paginationDiv.appendChild(lastButton);
+          
+          const inProgressIndex = findInProgressIndex(allClaimsData);
+          if (inProgressIndex >= 0) {
+            const jumpButton = document.createElement('button');
+            jumpButton.id = 'jumpToLatest';
+            jumpButton.textContent = 'Active';
+            jumpButton.addEventListener('click', () => {
+              currentPage = getPageForIndex(inProgressIndex);
+              updateTable();
+            });
+            paginationDiv.appendChild(jumpButton);
+          }
+          
+          controlsContainer.appendChild(paginationDiv);
+        } else {
+          const placeholder = document.createElement('div');
+          placeholder.className = 'pagination-placeholder';
+          controlsContainer.appendChild(placeholder);
+        }
+      }
+      
+      function initPagination() {
+        const savedPaginationState = localStorage.getItem('patchcoinPaginationEnabled');
+        if (savedPaginationState !== null) {
+          paginationEnabled = savedPaginationState === 'true';
+        }
+        const paginationToggle = document.getElementById('paginationToggle');
+        paginationToggle.checked = !paginationEnabled;
+        togglePaginationControls();
+        paginationToggle.addEventListener('change', function() {
+          paginationEnabled = !this.checked;
+          localStorage.setItem('patchcoinPaginationEnabled', paginationEnabled.toString());
+          togglePaginationControls();
+          updateTable();
         });
-    }
-
-    function updateTable() {
-        const dataToShow = paginationEnabled ? (paginateData(), paginatedData) : allClaimsData;
-
+      }
+      
+      function updateTable() {
+        let filteredData = allClaimsData;
+        const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (searchTerm) {
+          filteredData = allClaimsData.filter(item => {
+            return item.peercoin_address.toLowerCase().includes(searchTerm) ||
+                   item.patchcoin_address.toLowerCase().includes(searchTerm) ||
+                   new Date(item.nTime * 1000).toLocaleString().toLowerCase().includes(searchTerm);
+          });
+        }
+        
+        totalPages = Math.ceil(filteredData.length / rowsPerPage);
+        if (currentPage > totalPages) {
+          currentPage = totalPages || 1;
+        }
+        
+        const dataToShow = paginationEnabled ? paginateData(filteredData) : filteredData;
         const tableBody = document.querySelector("#claimsTable tbody");
         tableBody.innerHTML = "";
-
-        dataToShow.forEach((item, index) => {
-            const key = item.peercoin_address + '-' + item.patchcoin_address + '-' + item.nTime;
-            const isInProgress = item.total_received > 0 && item.total_received < item.patchcoin_eligible;
-
-            const row = document.createElement("tr");
-
-
-            const fillPercentage = item.patchcoin_eligible > 0
-                ? Math.min((item.total_received / item.patchcoin_eligible) * 100, 100)
-                : 0;
-            row.style.background = `linear-gradient(to right, var(--fill-color) ${fillPercentage}%, transparent ${fillPercentage}%)`;
-
-            const date = new Date(item.nTime * 1000).toLocaleString();
-            row.innerHTML = `
-          <td>${date}</td>
-          <td class="truncate" title="${item.peercoin_address}">${truncatedAddress(item.peercoin_address)}</td>
-          <td class="truncate" title="${item.patchcoin_address}">${truncatedAddress(item.patchcoin_address)}</td>
-          <td class="number">${formatNumber(item.peercoin_balance)}</td>
-          <td class="number">${formatNumber(item.patchcoin_eligible)}</td>
-          <td class="number">${formatNumber(item.total_received)}</td>
-          <td><button class="toggleRow" data-key="${key}">Toggle JSON</button></td>
-        `;
-            tableBody.appendChild(row);
-
-            const detailRow = document.createElement("tr");
-            detailRow.style.display = window.toggleStates[key] ? "table-row" : "none";
-            const detailCell = document.createElement("td");
-            detailCell.colSpan = 7;
-            detailCell.style.background = "#f0f0f0";
-            detailCell.innerHTML = `<pre style="margin:0;">${JSON.stringify(item, null, 2)}</pre>`;
-            detailRow.appendChild(detailCell);
-            tableBody.appendChild(detailRow);
+        
+        dataToShow.forEach(item => {
+          const key = item.peercoin_address + '-' + item.patchcoin_address + '-' + item.nTime;
+          const row = document.createElement("tr");
+          const fillPercentage = item.patchcoin_eligible > 0
+            ? Math.min((item.total_received / item.patchcoin_eligible) * 100, 100)
+            : 0;
+          row.style.background = `linear-gradient(to right, var(--fill-color) ${fillPercentage}%, transparent ${fillPercentage}%)`;
+          const date = new Date(item.nTime * 1000).toLocaleString();
+          
+          row.innerHTML = `
+            <td>${date}</td>
+            <td class="truncate" title="${item.peercoin_address}">${truncatedAddress(item.peercoin_address)}</td>
+            <td class="truncate" title="${item.patchcoin_address}">${truncatedAddress(item.patchcoin_address)}</td>
+            <td class="number">${formatNumber(item.peercoin_balance)}</td>
+            <td class="number">${formatNumber(item.patchcoin_eligible)}</td>
+            <td class="number">${formatNumber(item.total_received)}</td>
+            <td><button class="toggleRow" data-key="${key}">Toggle JSON</button></td>
+          `;
+          
+          tableBody.appendChild(row);
+          
+          const detailRow = document.createElement("tr");
+          detailRow.style.display = window.toggleStates[key] ? "table-row" : "none";
+          const detailCell = document.createElement("td");
+          detailCell.colSpan = 7;
+          detailCell.style.background = "#f0f0f0";
+          detailCell.innerHTML = `<pre style="margin:0;">${JSON.stringify(item, null, 2)}</pre>`;
+          detailRow.appendChild(detailCell);
+          tableBody.appendChild(detailRow);
         });
-
+        
         document.querySelectorAll(".toggleRow").forEach(button => {
-            button.addEventListener("click", function() {
-                const key = this.dataset.key;
-                const currentRow = this.parentElement.parentElement;
-                const detailRow = currentRow.nextElementSibling;
-                if (detailRow.style.display === "none" || detailRow.style.display === "") {
-                    detailRow.style.display = "table-row";
-                    window.toggleStates[key] = true;
-                } else {
-                    detailRow.style.display = "none";
-                    window.toggleStates[key] = false;
-                }
-            });
+          button.addEventListener("click", function() {
+            const key = this.dataset.key;
+            const currentRow = this.parentElement.parentElement;
+            const detailRow = currentRow.nextElementSibling;
+            if (detailRow.style.display === "none" || detailRow.style.display === "") {
+              detailRow.style.display = "table-row";
+              window.toggleStates[key] = true;
+            } else {
+              detailRow.style.display = "none";
+              window.toggleStates[key] = false;
+            }
+          });
         });
-    }
-
-    async function updateDashboard() {
+        
+        togglePaginationControls();
+      }
+      
+      async function updateDashboard() {
         const data = await fetchData();
         data.sort((a, b) => a.nTime - b.nTime);
+        
+        if (firstLoad) {
+          const inProgressIndex = findInProgressIndex(data);
+          currentPage = inProgressIndex >= 0 ? getPageForIndex(inProgressIndex) : 1;
+          firstLoad = false;
+        }
+        
+        lastData = data;
         window.sortedClaims = data;
         allClaimsData = data;
-
-                totalPages = Math.ceil(data.length / rowsPerPage);
-
-                inProgressIndex = findInProgressIndex(data);
-
-                if (inProgressIndex >= 0) {
-            currentPage = getPageForIndex(inProgressIndex);
-        } else {
-            currentPage = 1;         }
-
+        totalPages = Math.ceil(allClaimsData.length / rowsPerPage);
+        
+        if (currentPage > totalPages) {
+          currentPage = totalPages || 1;
+        }
+        
         const times = [];
         const cumulativeEligible = [];
         const cumulativeReceived = [];
         let totalEligible = 0;
         let totalReceived = 0;
-
-        data.forEach(item => {
-            totalEligible += item.patchcoin_eligible;
-            cumulativeEligible.push(totalEligible);
-            totalReceived += item.total_received;
-            cumulativeReceived.push(totalReceived);
-            const date = new Date(item.nTime * 1000);
-            times.push(date.toLocaleString());
+        
+        allClaimsData.forEach(item => {
+          totalEligible += item.patchcoin_eligible;
+          cumulativeEligible.push(totalEligible);
+          totalReceived += item.total_received;
+          cumulativeReceived.push(totalReceived);
+          const date = new Date(item.nTime * 1000);
+          times.push(date.toLocaleString());
         });
-
+        
         const chartConfig = {
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [
-                    {
-                        label: 'Cumulative Eligible',
-                        data: cumulativeEligible,
-                        borderColor: '#2563eb',
-                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2,
-                        pointRadius: 0
-                    },
-                    {
-                        label: 'Cumulative Received',
-                        data: cumulativeReceived,
-                        borderColor: '#16a34a',
-                        backgroundColor: 'rgba(144,238,144,0.2)',
-                        fill: true,
-                        tension: 0,
-                        pointRadius: 0,
-                        borderWidth: 2
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    intersect: false,
-                    mode: 'index'
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: {
-                            maxTicksLimit: window.innerWidth < 768 ? 5 : 10,
-                            maxRotation: 45,
-                            minRotation: 45
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                        ticks: { callback: (value) => formatNumber(value) }
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        enabled: false,
-                        external: function(context) {
-                            let tooltipEl = document.getElementById('chartjs-tooltip');
-                            if (!tooltipEl) {
-                                tooltipEl = document.createElement('div');
-                                tooltipEl.id = 'chartjs-tooltip';
-                                document.body.appendChild(tooltipEl);
-                            }
-                            const tooltipModel = context.tooltip;
-                            if (tooltipModel.opacity === 0) {
-                                tooltipEl.style.opacity = 0;
-                                return;
-                            }
-                            tooltipEl.innerHTML = createTooltipHtml(tooltipModel.dataPoints);
-                            const position = context.chart.canvas.getBoundingClientRect();
-                            tooltipEl.style.position = 'absolute';
-                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
-                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
-                            tooltipEl.style.opacity = 1;
-                            tooltipEl.style.pointerEvents = 'none';
-                        }
-                    },
-                    legend: {
-                        labels: { usePointStyle: true, padding: 20 }
-                    }
+          type: 'line',
+          data: {
+            labels: times,
+            datasets: [
+              {
+                label: 'Cumulative Eligible',
+                data: cumulativeEligible,
+                borderColor: '#2563eb',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 0
+              },
+              {
+                label: 'Cumulative Received',
+                data: cumulativeReceived,
+                borderColor: '#16a34a',
+                backgroundColor: 'rgba(144,238,144,0.2)',
+                fill: true,
+                tension: 0,
+                pointRadius: 0,
+                borderWidth: 2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { 
+                  maxTicksLimit: window.innerWidth < 768 ? 5 : 10, 
+                  maxRotation: 45, 
+                  minRotation: 45 
                 }
+              },
+              y: {
+                beginAtZero: true,
+                grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                ticks: { callback: (value) => formatNumber(value) }
+              }
+            },
+            plugins: {
+              tooltip: {
+                enabled: false,
+                external: function(context) {
+                  let tooltipEl = document.getElementById('chartjs-tooltip');
+                  if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-tooltip';
+                    document.body.appendChild(tooltipEl);
+                  }
+                  const tooltipModel = context.tooltip;
+                  if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                  }
+                  tooltipEl.innerHTML = createTooltipHtml(tooltipModel.dataPoints);
+                  const position = context.chart.canvas.getBoundingClientRect();
+                  tooltipEl.style.position = 'absolute';
+                  tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                  tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                  tooltipEl.style.opacity = 1;
+                  tooltipEl.style.pointerEvents = 'none';
+                }
+              },
+              legend: { labels: { usePointStyle: true, padding: 20 } }
             }
+          }
         };
-
-        if (chart) { chart.destroy(); }
+        
+        if (chart) {
+          chart.destroy();
+        }
+        
         const ctx = document.getElementById('claimsChart').getContext('2d');
         chart = new Chart(ctx, chartConfig);
-
+        
         const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
         const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
         document.getElementById('capProgressEligible').style.width = eligiblePercent + '%';
         document.getElementById('capProgressReceived').style.width = receivedPercent + '%';
         document.getElementById('eligiblePercent').textContent = eligiblePercent.toFixed(2) + '%';
         document.getElementById('receivedPercent').textContent = receivedPercent.toFixed(2) + '%';
-        document.getElementById('eligibleSubtitle').textContent =
-            `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
-        document.getElementById('receivedSubtitle').textContent =
-            `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
-
+        document.getElementById('eligibleSubtitle').textContent = `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
+        document.getElementById('receivedSubtitle').textContent = `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
+        
         updateTable();
-    }
-
-        initPagination();
-
-        updateDashboard();
-
-        setInterval(updateDashboard, 60000);
-
-    window.addEventListener('resize', () => { if (chart) { chart.resize(); } });
-</script>
-</body>
+      }
+      
+      initPagination();
+      updateDashboard();
+      setInterval(updateDashboard, 60000);
+      
+      window.addEventListener('resize', () => {
+        if (chart) {
+          chart.resize();
+        }
+      });
+      
+      document.getElementById('searchInput').addEventListener('input', updateTable);
+    </script>
+  </body>
 </html>
-
