@@ -431,7 +431,7 @@
           
           const firstButton = document.createElement('button');
           firstButton.id = 'firstPage';
-          firstButton.textContent = 'First';
+          firstButton.textContent = '««';
           firstButton.addEventListener('click', () => {
             currentPage = 1;
             updateTable();
@@ -439,7 +439,7 @@
           
           const prevButton = document.createElement('button');
           prevButton.id = 'prevPage';
-          prevButton.textContent = 'Prev';
+          prevButton.textContent = '«';
           prevButton.addEventListener('click', () => {
             if (currentPage > 1) {
               currentPage--;
@@ -454,7 +454,7 @@
           
           const nextButton = document.createElement('button');
           nextButton.id = 'nextPage';
-          nextButton.textContent = 'Next';
+          nextButton.textContent = '»';
           nextButton.addEventListener('click', () => {
             if (currentPage < totalPages) {
               currentPage++;
@@ -464,7 +464,7 @@
           
           const lastButton = document.createElement('button');
           lastButton.id = 'lastPage';
-          lastButton.textContent = 'Last';
+          lastButton.textContent = '»»';
           lastButton.addEventListener('click', () => {
             currentPage = totalPages;
             updateTable();
@@ -485,7 +485,7 @@
           if (inProgressIndex >= 0) {
             const jumpButton = document.createElement('button');
             jumpButton.id = 'jumpToLatest';
-            jumpButton.textContent = 'Active';
+            jumpButton.textContent = 'A';
             jumpButton.addEventListener('click', () => {
               currentPage = getPageForIndex(inProgressIndex);
               updateTable();
