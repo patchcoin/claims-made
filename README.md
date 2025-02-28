@@ -4,9 +4,9 @@ https://patchcoin.github.io/claims-made
 
 ## Summary
 
-- **Total Claims:** 616
-- **Total Peercoin Balance:** 3746916.185539 PPC
-- **Total Patchcoin Eligible:** 7789759.781220 PTC
+- **Total Claims:** 617
+- **Total Peercoin Balance:** 3774519.416611 PPC
+- **Total Patchcoin Eligible:** 7839759.781220 PTC
 - **Total Received:** 1797600.000000 PTC
 - **Progress Toward 21M Cap:** 8.56%
 
@@ -16,6 +16,7 @@ https://patchcoin.github.io/claims-made
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
+| [P8fADPezT3KyivQKqHp5Z8K9SqmPz1HRoZ](https://chainz.cryptoid.info/ppc/address.dws?P8fADPezT3KyivQKqHp5Z8K9SqmPz1HRoZ.htm) | PD7PR9pYQ5ztEppgZdTGtKbHjox1APpAy3 | 27603.231072 | 50000.000000 | 0.000000 | 1740726902 |
 | [PWbVRzvRP2cQU1czjgJ1nG6hxyejw4eiYG](https://chainz.cryptoid.info/ppc/address.dws?PWbVRzvRP2cQU1czjgJ1nG6hxyejw4eiYG.htm) | PFFab4dJu37u1m4fWAXRJccAog25m35rQs | 98.972000 | 989.720000 | 0.000000 | 1740711523 |
 | [P8ue6NKEzVN6cGESn2FUcG8EZS22ezEK97](https://chainz.cryptoid.info/ppc/address.dws?P8ue6NKEzVN6cGESn2FUcG8EZS22ezEK97.htm) | PMB4ZkYQ8Pmo4bqdVTabVD9D8W6frhfCFw | 37.872000 | 378.720000 | 0.000000 | 1740711433 |
 | [PNFszZBXeEBMAR77UzHa8DzJHkXFuyKS1P](https://chainz.cryptoid.info/ppc/address.dws?PNFszZBXeEBMAR77UzHa8DzJHkXFuyKS1P.htm) | PFz6gcCsveraMdE5UGETnrC6aeRDwQDGF3 | 179.153700 | 1791.537000 | 0.000000 | 1740709689 |
