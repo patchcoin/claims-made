@@ -7,11 +7,11 @@ https://patchcoin.github.io/claims-made
 - **Total Claims:** 658
 - **Total Peercoin Balance:** 4041868.393067 PPC
 - **Total Patchcoin Eligible:** 8289604.165200 PTC
-- **Total Received:** 2450400.000000 PTC
-- **Progress Toward 21M Cap:** 11.67%
+- **Total Received:** 2452800.000000 PTC
+- **Progress Toward 21M Cap:** 11.68%
 
 ```
-[#########-----------------------------------------------------------------------] (11.67%)
+[#########-----------------------------------------------------------------------] (11.68%)
 ```
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
@@ -563,8 +563,8 @@ https://patchcoin.github.io/claims-made
 | [PEEEEVMeBhCe4hY1RJfoJAgAJoB1rav4Hn](https://chainz.cryptoid.info/ppc/address.dws?PEEEEVMeBhCe4hY1RJfoJAgAJoB1rav4Hn.htm) | PCtkurb2G5zp4G3xvvu3rXYDUYf899LC59 | 0.020744 | 0.207440 | 0.000000 | 1740324698 |
 | [PWMuxKTa5XHd7NGjgcKiYdM7ErZjKVfgeC](https://chainz.cryptoid.info/ppc/address.dws?PWMuxKTa5XHd7NGjgcKiYdM7ErZjKVfgeC.htm) | PXqBX3m69SmTfbnykcW9CTokKqB8fDVNCe | 1292.530000 | 12925.300000 | 0.000000 | 1740322189 |
 | [P9UFqiMrQVBSFXJZdibdSxY8kCnb3nR19c](https://chainz.cryptoid.info/ppc/address.dws?P9UFqiMrQVBSFXJZdibdSxY8kCnb3nR19c.htm) | PX474C2gg7GrE4wiEfPM92WVXdu4CdyzpQ | 100.000000 | 1000.000000 | 0.000000 | 1740322086 |
-| [PPJkKFFuKHxn3Be2VPZ8NWxG51Pi5tB6GA](https://chainz.cryptoid.info/ppc/address.dws?PPJkKFFuKHxn3Be2VPZ8NWxG51Pi5tB6GA.htm) | PFoyQTegXjrCAY8cfvc9oNTTt7wh6iJ5wD | 359.557496 | 3595.574960 | 0.000000 | 1740318740 |
-| [PJHNLLnjMMGYh8nKmsTpHpQBA5dp274BEo](https://chainz.cryptoid.info/ppc/address.dws?PJHNLLnjMMGYh8nKmsTpHpQBA5dp274BEo.htm) | PXUwDbwNd2s6trcbAmCfb7HiidtDoubjE4 | 168.929952 | 1689.299520 | 490.177970 | 1740318645 |
+| [PPJkKFFuKHxn3Be2VPZ8NWxG51Pi5tB6GA](https://chainz.cryptoid.info/ppc/address.dws?PPJkKFFuKHxn3Be2VPZ8NWxG51Pi5tB6GA.htm) | PFoyQTegXjrCAY8cfvc9oNTTt7wh6iJ5wD | 359.557496 | 3595.574960 | 1200.878450 | 1740318740 |
+| [PJHNLLnjMMGYh8nKmsTpHpQBA5dp274BEo](https://chainz.cryptoid.info/ppc/address.dws?PJHNLLnjMMGYh8nKmsTpHpQBA5dp274BEo.htm) | PXUwDbwNd2s6trcbAmCfb7HiidtDoubjE4 | 168.929952 | 1689.299520 | 1689.299520 | 1740318645 |
 | [PNsWyRE4bj9jVFBZpXLij5PVG13HeMQ8z1](https://chainz.cryptoid.info/ppc/address.dws?PNsWyRE4bj9jVFBZpXLij5PVG13HeMQ8z1.htm) | PW7BDTes8WnLk51vzcmgJgWkBwHW3XFR2A | 6899.220986 | 50000.000000 | 50000.000000 | 1740318376 |
 | [PKbuwmUS9NWB6kqiWpfuhUfeBKue39D6XZ](https://chainz.cryptoid.info/ppc/address.dws?PKbuwmUS9NWB6kqiWpfuhUfeBKue39D6XZ.htm) | PPB49BkrTW2H7AQU7zHaWsqm4aZhcbPpBb | 226838.117645 | 50000.000000 | 50000.000000 | 1740318299 |
 | [PUTjXcXpUqg6WVB9DDqpVaJnDQBQG3NwCS](https://chainz.cryptoid.info/ppc/address.dws?PUTjXcXpUqg6WVB9DDqpVaJnDQBQG3NwCS.htm) | PQ6C4ezmqo2QjCUmtpY6sWsnVjQmQ8BL5i | 130.084288 | 1300.842880 | 1300.842880 | 1740318294 |
