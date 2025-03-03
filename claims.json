@@ -4793,7 +4793,7 @@
     "signature": "IDhDkXvKH0LJRY092yWLdXk1kPocGqRwsx+tXYx85oBYX5nOsLuyCEbwO5yJWxHx+/7rG7Xw9T15CMkNWo3fyHE=",
     "peercoin_balance": 385.280163,
     "patchcoin_eligible": 3852.801630,
-    "total_received": 0.000000,
+    "total_received": 682.106390,
     "nTime": 1740344107
   },
   {
@@ -4802,7 +4802,7 @@
     "signature": "G9xSehg6Xxm9Yn8+WKX6TmWStorwvXmHM3SwHd3bYkB/Qd5Ihd0eq8vWUPaJYyoDbCLnjlcoCrcpPxbky93jLtI=",
     "peercoin_balance": 63914.437982,
     "patchcoin_eligible": 50000.000000,
-    "total_received": 48282.106390,
+    "total_received": 50000.000000,
     "nTime": 1740343939
   },
   {
