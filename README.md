@@ -7,11 +7,11 @@ https://patchcoin.github.io/claims-made
 - **Total Claims:** 670
 - **Total Peercoin Balance:** 4047563.210964 PPC
 - **Total Patchcoin Eligible:** 8346552.344170 PTC
-- **Total Received:** 3141600.000000 PTC
-- **Progress Toward 21M Cap:** 14.96%
+- **Total Received:** 3144000.000000 PTC
+- **Progress Toward 21M Cap:** 14.97%
 
 ```
-[###########---------------------------------------------------------------------] (14.96%)
+[###########---------------------------------------------------------------------] (14.97%)
 ```
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
@@ -499,7 +499,7 @@ https://patchcoin.github.io/claims-made
 | [PWK31vXjDf8BEGXgaL7W8ABxnF7fV9f5vq](https://chainz.cryptoid.info/ppc/address.dws?PWK31vXjDf8BEGXgaL7W8ABxnF7fV9f5vq.htm) | PAvw8SXZKoFPibwCf5rdTFtRW3cekThTtc | 927.397793 | 9273.977930 | 0.000000 | 1740398500 |
 | [PJrekVHUCStikwdLVeXbiAT13YyWSL5dzh](https://chainz.cryptoid.info/ppc/address.dws?PJrekVHUCStikwdLVeXbiAT13YyWSL5dzh.htm) | PNtNGGQegRKm1k7vTumuf9KZkoyzwpBQDB | 863.386504 | 8633.865040 | 0.000000 | 1740398349 |
 | [PUeL9thyjDELMCdvuEYLszqYo4CmkoxVws](https://chainz.cryptoid.info/ppc/address.dws?PUeL9thyjDELMCdvuEYLszqYo4CmkoxVws.htm) | PLympsCRFMaxLgsTTkV2hgnZfL2LBm9cvh | 746.133210 | 7461.332100 | 0.000000 | 1740398315 |
-| [PXbPvXpyNZ8thR9sVyBARQMSHvnzKnLEMo](https://chainz.cryptoid.info/ppc/address.dws?PXbPvXpyNZ8thR9sVyBARQMSHvnzKnLEMo.htm) | PF8xQUL4q8mM81rHE2fHn6QF3jzFnmsxuF | 757.181514 | 7571.815140 | 2741.620410 | 1740398270 |
+| [PXbPvXpyNZ8thR9sVyBARQMSHvnzKnLEMo](https://chainz.cryptoid.info/ppc/address.dws?PXbPvXpyNZ8thR9sVyBARQMSHvnzKnLEMo.htm) | PF8xQUL4q8mM81rHE2fHn6QF3jzFnmsxuF | 757.181514 | 7571.815140 | 5141.620410 | 1740398270 |
 | [PTpf7D3LgL7YkHqymjgRcdwMnutYT5wRPK](https://chainz.cryptoid.info/ppc/address.dws?PTpf7D3LgL7YkHqymjgRcdwMnutYT5wRPK.htm) | PQigQgFhhQVSiAsVzbseKXnPhJFo6mV9EM | 500.000000 | 5000.000000 | 5000.000000 | 1740398240 |
 | [PH9AWGiJcR7kAN82qR2z1q78gnbzwY4e3v](https://chainz.cryptoid.info/ppc/address.dws?PH9AWGiJcR7kAN82qR2z1q78gnbzwY4e3v.htm) | PKtkiFqtHE9JqY7n6wNN3YvrQZGZnQ179V | 203.869857 | 2038.698570 | 2038.698570 | 1740398200 |
 | [PR7kdF9uxvW4MpkbtHeB63wM32pc1GjV6p](https://chainz.cryptoid.info/ppc/address.dws?PR7kdF9uxvW4MpkbtHeB63wM32pc1GjV6p.htm) | P93BkiMUEQKTvphmNJ4UpyCkuv7FHVN8Aw | 202.807561 | 2028.075610 | 2028.075610 | 1740398159 |
