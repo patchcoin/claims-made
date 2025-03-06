@@ -6,12 +6,12 @@ https://patchcoin.github.io/claims-made
 
 - **Total Claims:** 687
 - **Total Peercoin Balance:** 4243606.550378 PPC
-- **Total Patchcoin Eligible:**  PTC
-- **Total Received:**  PTC
-- **Progress Toward 21M Cap:** 0.00%
+- **Total Patchcoin Eligible:** 8626770.295830 PTC
+- **Total Received:** 3825600.000000 PTC
+- **Progress Toward 21M Cap:** 18.22%
 
 ```
-[--------------------------------------------------------------------------------] (0.00%)
+[##############------------------------------------------------------------------] (18.22%)
 ```
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
