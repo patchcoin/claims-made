@@ -9,6 +9,7 @@
       :root {
         --primary-color: #2563eb;
         --success-color: #16a34a;
+        --peercoin-color: #f59e0b;
         --background-color: #f8f9fa;
         --card-background: #ffffff;
         --border-color: #e5e7eb;
@@ -84,6 +85,10 @@
         color: var(--success-color);
       }
       
+      .progress-peercoin {
+        color: var(--peercoin-color);
+      }
+      
       .progress {
         background: #e9ecef;
         border-radius: 9999px;
@@ -107,6 +112,10 @@
       
       #capProgressReceived {
         background: var(--success-color);
+      }
+      
+      #capProgressPeercoin {
+        background: var(--peercoin-color);
       }
       
       .progress-subtitle {
@@ -388,6 +397,16 @@
             </div>
             <div class="progress-subtitle" id="receivedSubtitle">0 / 21,000,000</div>
           </div>
+          <div class="progress-group">
+            <div class="progress-label">
+              <span>Peercoins Used</span>
+              <span class="progress-value progress-peercoin" id="peercoinPercent">0%</span>
+            </div>
+            <div class="progress">
+              <div id="capProgressPeercoin" class="progress-bar"></div>
+            </div>
+            <div class="progress-subtitle" id="peercoinSubtitle">0 PPC</div>
+          </div>
         </div>
         <div class="controls-wrapper">
           <div class="pagination-container">
@@ -453,12 +472,16 @@
         const idx = context[0].dataIndex;
         const claim = window.sortedClaims[idx];
         if (!claim) return '';
+        const datasetLines = context.map(item => {
+          return `<div style="color: ${item.dataset.borderColor};">
+            ${item.dataset.label}: ${formatNumber(item.parsed.y)}
+          </div>`;
+        }).join('');
+        
         return `
           <div class="chart-tooltip">
             <div style="font-weight: 600; margin-bottom: 8px;">${context[0].label}</div>
-            <div style="color: ${context[0].dataset.borderColor};">
-              ${context[0].dataset.label}: ${formatNumber(context[0].parsed.y)}
-            </div>
+            ${datasetLines}
             <div style="margin-top: 8px; font-size: 0.8em; color: #666;">
               <div>Claim ID: ${idx + 1}</div>
               <div>Peercoin: ${truncatedAddress(claim.peercoin_address)}</div>
@@ -807,14 +830,18 @@
         const times = [];
         const cumulativeEligible = [];
         const cumulativeReceived = [];
+        const cumulativePeercoin = [];
         let totalEligible = 0;
         let totalReceived = 0;
+        let totalPeercoin = 0;
         
         allClaimsData.forEach(item => {
           totalEligible += item.patchcoin_eligible;
           cumulativeEligible.push(totalEligible);
           totalReceived += item.total_received;
           cumulativeReceived.push(totalReceived);
+          totalPeercoin += item.peercoin_balance;
+          cumulativePeercoin.push(totalPeercoin);
           const date = new Date(item.nTime * 1000);
           times.push(date.toLocaleString());
         });
@@ -838,7 +865,17 @@
                 label: 'Cumulative Received',
                 data: cumulativeReceived,
                 borderColor: '#16a34a',
-                backgroundColor: 'rgba(144,238,144,0.2)',
+                backgroundColor: 'rgba(144, 238, 144, 0.2)',
+                fill: true,
+                tension: 0,
+                pointRadius: 0,
+                borderWidth: 2
+              },
+              {
+                label: 'Peercoins Used',
+                data: cumulativePeercoin,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.2)',
                 fill: true,
                 tension: 0,
                 pointRadius: 0,
@@ -903,12 +940,16 @@
         
         const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
         const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
+        const peercoinPercent = Math.min((totalPeercoin / 29405803) * 100, 100);
         document.getElementById('capProgressEligible').style.width = eligiblePercent + '%';
         document.getElementById('capProgressReceived').style.width = receivedPercent + '%';
+        document.getElementById('capProgressPeercoin').style.width = peercoinPercent + '%';
         document.getElementById('eligiblePercent').textContent = eligiblePercent.toFixed(2) + '%';
         document.getElementById('receivedPercent').textContent = receivedPercent.toFixed(2) + '%';
+        document.getElementById('peercoinPercent').textContent = peercoinPercent.toFixed(2) + '%';
         document.getElementById('eligibleSubtitle').textContent = `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
         document.getElementById('receivedSubtitle').textContent = `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
+        document.getElementById('peercoinSubtitle').textContent = `${formatNumber(totalPeercoin)} / ${formatNumber(29405803)} PPC`;
         
         updateTable(() => {
           scrollToClaimFromHash();
