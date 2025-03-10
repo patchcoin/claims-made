@@ -405,7 +405,7 @@
             <div class="progress">
               <div id="capProgressPeercoin" class="progress-bar"></div>
             </div>
-            <div class="progress-subtitle" id="peercoinSubtitle">0 PPC</div>
+            <div class="progress-subtitle" id="peercoinSubtitle">0 / 29,405,803</div>
           </div>
         </div>
         <div class="controls-wrapper">
@@ -949,7 +949,7 @@
         document.getElementById('peercoinPercent').textContent = peercoinPercent.toFixed(2) + '%';
         document.getElementById('eligibleSubtitle').textContent = `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
         document.getElementById('receivedSubtitle').textContent = `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
-        document.getElementById('peercoinSubtitle').textContent = `${formatNumber(totalPeercoin)} / ${formatNumber(29405803)} PPC`;
+        document.getElementById('peercoinSubtitle').textContent = `${formatNumber(totalPeercoin)} / ${formatNumber(29405803)}`;
         
         updateTable(() => {
           scrollToClaimFromHash();
