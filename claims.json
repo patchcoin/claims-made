@@ -2264,7 +2264,7 @@
     "signature": "INZ3L4gYtWlrQFCK8Er1moPj0va2ii8UVfY/IJmOlF5PUgYlnVTv1b6wllHDSTr7RziNSLj9M3isJWU8EjzE3XQ=",
     "peercoin_balance": 4034.101637,
     "patchcoin_eligible": 40341.016370,
-    "total_received": 0.000000,
+    "total_received": 1981.963290,
     "nTime": 1740583355
   },
   {
@@ -2273,7 +2273,7 @@
     "signature": "IP/p+IMhXTz43LHejIWe9lWoTAdf5Jkn447HSGqmKO3SYrcbDK6Mm1dv6KHdlDEc4b9+buNQvBw38RElFBXvVp8=",
     "peercoin_balance": 69.590898,
     "patchcoin_eligible": 695.908980,
-    "total_received": 277.872270,
+    "total_received": 695.908980,
     "nTime": 1740583311
   },
   {
