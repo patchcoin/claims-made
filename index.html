@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patchcoin Claims</title>
+    <title>Patchcoin Claims Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       :root {
         --primary-color: #2563eb;
         --success-color: #16a34a;
         --peercoin-color: #f59e0b;
+        --warning-color: #ef4444;
         --background-color: #f8f9fa;
         --card-background: #ffffff;
         --border-color: #e5e7eb;
@@ -17,13 +18,13 @@
         --text-secondary: #6b7280;
         --fill-color: rgba(22, 163, 44, 0.1);
       }
-      
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-      
+
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background: var(--background-color);
@@ -31,13 +32,13 @@
         line-height: 1.5;
         padding: 1rem;
       }
-      
+
       .container {
         max-width: 1200px;
         margin: 0 auto;
         padding: 1rem;
       }
-      
+
       .card {
         background: var(--card-background);
         border-radius: 12px;
@@ -45,7 +46,7 @@
         padding: 1.5rem;
         margin-bottom: 1.5rem;
       }
-      
+
       h1 {
         font-size: 1.875rem;
         font-weight: 700;
@@ -53,18 +54,33 @@
         color: var(--text-primary);
         margin-bottom: 1.5rem;
       }
-      
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
       #chartContainer {
         position: relative;
         height: 400px;
         width: 100%;
         margin-bottom: 2rem;
       }
-      
+
       .progress-container {
         margin-top: 2rem;
       }
-      
+
       .progress-label {
         display: flex;
         justify-content: space-between;
@@ -72,81 +88,81 @@
         margin-bottom: 0.5rem;
         font-weight: 500;
       }
-      
+
       .progress-value {
         font-weight: 600;
       }
-      
+
       .progress-eligible {
         color: var(--primary-color);
       }
-      
+
       .progress-received {
         color: var(--success-color);
       }
-      
+
       .progress-peercoin {
         color: var(--peercoin-color);
       }
-      
+
       .progress {
         background: #e9ecef;
         border-radius: 9999px;
         overflow: hidden;
         height: 1rem;
       }
-      
+
       .progress-bar {
         height: 100%;
         transition: width 0.5s ease;
         border-radius: 9999px;
       }
-      
+
       .progress-group {
         margin-bottom: 1.5rem;
       }
-      
+
       #capProgressEligible {
         background: var(--primary-color);
       }
-      
+
       #capProgressReceived {
         background: var(--success-color);
       }
-      
+
       #capProgressPeercoin {
         background: var(--peercoin-color);
       }
-      
+
       .progress-subtitle {
         font-size: 0.875rem;
         color: var(--text-secondary);
         text-align: right;
         margin-top: 0.25rem;
       }
-      
+
       .table-container {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
-      
+
       table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 1rem;
         table-layout: auto;
       }
-      
+
       table, th, td {
         border: 1px solid #ddd;
       }
-      
+
       th, td {
         padding: 8px;
         text-align: left;
         white-space: nowrap;
       }
-      
+
       th.number, td.number {
         text-align: right;
       }
@@ -155,18 +171,18 @@
         width: 70px;
         max-width: 70px;
       }
-      
+
       th {
         background: #f2f2f2;
       }
-      
+
       .truncate {
         max-width: 200px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
-      
+
       .full-address {
         position: absolute;
         left: -9999px;
@@ -181,14 +197,14 @@
         color: var(--primary-color);
         margin-right: 4px;
       }
-      
+
       .claim-link {
         color: var(--primary-color);
         text-decoration: none;
         cursor: pointer;
         font-size: 0.85em;
       }
-      
+
       .chart-tooltip {
         background: var(--card-background);
         border-radius: 8px;
@@ -197,14 +213,14 @@
         border: 1px solid var(--border-color);
         font-size: 0.875rem;
       }
-      
+
       .pagination {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
       }
-      
+
       .pagination button {
         padding: 0.4rem 0.7rem;
         border: 1px solid var(--border-color);
@@ -215,42 +231,42 @@
         color: var(--text-primary);
         font-size: 0.85rem;
       }
-      
+
       .pagination button:hover {
         background: var(--background-color);
       }
-      
+
       .pagination button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
       }
-      
+
       .pagination-container {
         display: flex;
         align-items: center;
         gap: 1rem;
         flex-wrap: wrap;
       }
-      
+
       .pagination-toggle {
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
-      
+
       .toggle-switch {
         position: relative;
         display: inline-block;
         width: 60px;
         height: 24px;
       }
-      
+
       .toggle-switch input {
         opacity: 0;
         width: 0;
         height: 0;
       }
-      
+
       .toggle-slider {
         position: absolute;
         cursor: pointer;
@@ -262,7 +278,7 @@
         transition: .4s;
         border-radius: 24px;
       }
-      
+
       .toggle-slider:before {
         position: absolute;
         content: "";
@@ -274,15 +290,15 @@
         transition: .4s;
         border-radius: 50%;
       }
-      
+
       input:checked + .toggle-slider {
         background-color: var(--primary-color);
       }
-      
+
       input:checked + .toggle-slider:before {
         transform: translateX(36px);
       }
-      
+
       .search-container input {
         padding: 0.5rem 1rem;
         width: 100%;
@@ -291,7 +307,7 @@
         border-radius: 4px;
         font-size: 1rem;
       }
-      
+
       .controls-wrapper {
         display: flex;
         align-items: center;
@@ -319,7 +335,7 @@
       .claim-link:hover {
         text-decoration: underline;
       }
-      
+
       .toast {
         position: fixed;
         bottom: 20px;
@@ -335,22 +351,185 @@
         pointer-events: none;
       }
 
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-family: monospace;
+        resize: vertical;
+      }
+
+      #checker-view button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      #checker-view button:hover {
+        background-color: #1d4ed8;
+      }
+
+      input[type="file"] {
+        margin: 0.5rem 0;
+        cursor: pointer;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1.5rem;
+      }
+
+      .tab {
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+
+      .tab.active {
+        border-bottom-color: var(--primary-color);
+        color: var(--primary-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      #output {
+        background-color: #f3f4f6;
+        padding: 1rem;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        font-family: monospace;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 0.5rem;
+      }
+
+      .output-container {
+        margin-top: 1.5rem;
+      }
+
+      .output-status {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .status-success {
+        color: var(--success-color);
+      }
+
+      .status-warning {
+        color: var(--warning-color);
+      }
+
+      .update-controls {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .update-status-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .update-note {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        font-style: italic;
+      }
+
+      .small-button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid var(--primary-color);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .nav-link {
+        color: var(--text-primary);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .nav-link:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .nav-link.active {
+        color: var(--primary-color);
+        font-weight: 500;
+        background-color: rgba(37, 99, 235, 0.1);
+      }
+
       @media (min-width: 1200px) {
         .card {
           padding-left: 1rem;
           padding-right: 1rem;
         }
-        
+
         th, td {
           padding-left: 6px;
           padding-right: 6px;
         }
-        
+
         .truncate {
           max-width: 190px;
         }
       }
-      
+
       @media (max-width: 768px) {
         body { padding: 0.5rem; }
         .container { padding: 0.5rem; }
@@ -359,8 +538,10 @@
         #chartContainer { height: 300px; }
         .progress { height: 0.75rem; }
         .pagination button { padding: 0.4rem 0.8rem; font-size: 0.875rem; }
+        .tab { padding: 0.5rem 1rem; }
+        .nav-links { flex-direction: column; gap: 0.5rem; align-items: center; }
       }
-      
+
       @media (max-width: 480px) {
         #chartContainer { height: 250px; }
         .progress-label { font-size: 0.875rem; }
@@ -371,83 +552,143 @@
   <body>
     <div id="toast" class="toast"></div>
     <div class="container">
-      <div class="card">
-        <h1>Patchcoin Claims</h1>
-        <div id="chartContainer">
-          <canvas id="claimsChart"></canvas>
+      <h1>Patchcoin Claims</h1>
+
+      <div class="nav-links">
+        <a href="#dashboard" class="nav-link active" onclick="switchView('dashboard', event)">Dashboard</a>
+        <a href="#checker" class="nav-link" onclick="switchView('checker', event)">Claims Checker</a>
+      </div>
+
+      <div id="dashboard-view">
+        <div class="card">
+          <div id="chartContainer">
+            <canvas id="claimsChart"></canvas>
+          </div>
+          <div class="progress-container">
+            <div class="progress-group">
+              <div class="progress-label">
+                <span>Eligible Progress</span>
+                <span class="progress-value progress-eligible" id="eligiblePercent">0%</span>
+              </div>
+              <div class="progress">
+                <div id="capProgressEligible" class="progress-bar"></div>
+              </div>
+              <div class="progress-subtitle" id="eligibleSubtitle">0 / 21,000,000</div>
+            </div>
+            <div class="progress-group">
+              <div class="progress-label">
+                <span>Received Progress</span>
+                <span class="progress-value progress-received" id="receivedPercent">0%</span>
+              </div>
+              <div class="progress">
+                <div id="capProgressReceived" class="progress-bar"></div>
+              </div>
+              <div class="progress-subtitle" id="receivedSubtitle">0 / 21,000,000</div>
+            </div>
+            <div class="progress-group">
+              <div class="progress-label">
+                <span>Peercoins Used</span>
+                <span class="progress-value progress-peercoin" id="peercoinPercent">0%</span>
+              </div>
+              <div class="progress">
+                <div id="capProgressPeercoin" class="progress-bar"></div>
+              </div>
+              <div class="progress-subtitle" id="peercoinSubtitle">0 / 29,405,803</div>
+            </div>
+          </div>
+          <div class="controls-wrapper">
+            <div class="pagination-container">
+              <div class="pagination-toggle">
+                <label for="paginationToggle">Show all claims</label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="paginationToggle">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div id="paginationControls"></div>
+            </div>
+            <div class="search-container">
+              <input id="searchInput" type="text" placeholder="Search...">
+            </div>
+          </div>
+          <div class="table-container">
+            <table id="claimsTable">
+              <thead>
+                <tr>
+                  <th class="id-column">ID</th>
+                  <th>Time</th>
+                  <th>Peercoin Address</th>
+                  <th>Patchcoin Address</th>
+                  <th class="number">Peercoin Balance</th>
+                  <th class="number">Patchcoin Eligible</th>
+                  <th class="number">Total Received</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
-        <div class="progress-container">
-          <div class="progress-group">
-            <div class="progress-label">
-              <span>Eligible Progress</span>
-              <span class="progress-value progress-eligible" id="eligiblePercent">0%</span>
-            </div>
-            <div class="progress">
-              <div id="capProgressEligible" class="progress-bar"></div>
-            </div>
-            <div class="progress-subtitle" id="eligibleSubtitle">0 / 21,000,000</div>
+      </div>
+
+      <div id="checker-view" class="hidden">
+        <div class="card">
+          <h2>Patchcoin Claims Checker</h2>
+          <p>Check if your Peercoin addresses have been included in the claims. Missing addresses will be displayed below.</p>
+
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab('tab1', this)">Plain Address List</div>
+            <div class="tab" onclick="switchTab('tab2', this)">Pasted listunspent.json</div>
+            <div class="tab" onclick="switchTab('tab3', this)">Uploaded listunspent.json</div>
           </div>
-          <div class="progress-group">
-            <div class="progress-label">
-              <span>Received Progress</span>
-              <span class="progress-value progress-received" id="receivedPercent">0%</span>
-            </div>
-            <div class="progress">
-              <div id="capProgressReceived" class="progress-bar"></div>
-            </div>
-            <div class="progress-subtitle" id="receivedSubtitle">0 / 21,000,000</div>
+
+          <div id="tab1" class="tab-content active">
+            <h3>Check from Plain Address List</h3>
+            <textarea id="addressInput" rows="6" placeholder="Enter one Peercoin address per line"></textarea>
+            <br>
+            <button onclick="checkAddresses('text')">Check Addresses</button>
           </div>
-          <div class="progress-group">
-            <div class="progress-label">
-              <span>Peercoins Used</span>
-              <span class="progress-value progress-peercoin" id="peercoinPercent">0%</span>
-            </div>
-            <div class="progress">
-              <div id="capProgressPeercoin" class="progress-bar"></div>
-            </div>
-            <div class="progress-subtitle" id="peercoinSubtitle">0 / 29,405,803</div>
+
+          <div id="tab2" class="tab-content">
+            <h3>Check from Pasted listunspent.json</h3>
+            <textarea id="jsonInput" rows="6" placeholder="Paste listunspent.json here"></textarea>
+            <br>
+            <button onclick="checkAddresses('json')">Check JSON</button>
           </div>
-        </div>
-        <div class="controls-wrapper">
-          <div class="pagination-container">
-            <div class="pagination-toggle">
-              <label for="paginationToggle">Show all claims</label>
-              <label class="toggle-switch">
-                <input type="checkbox" id="paginationToggle">
-                <span class="toggle-slider"></span>
-              </label>
+
+          <div id="tab3" class="tab-content">
+            <h3>Check from Uploaded listunspent.json</h3>
+            <input type="file" id="jsonFile" accept="application/json">
+            <button onclick="checkAddresses('file')">Check JSON</button>
+          </div>
+
+          <div class="output-container">
+            <h3>Results</h3>
+            <div id="status" class="output-status"></div>
+            <div id="loader" class="loader hidden"></div>
+            <pre id="output">Results will appear here after checking.</pre>
+          </div>
+
+          <div class="update-controls">
+            <div class="update-status-container">
+              <span id="updateStatus">Updates paused</span>
+              <button id="toggleUpdatesBtn" class="small-button" onclick="toggleUpdates(!updatesPaused)">Resume Updates</button>
             </div>
-            <div id="paginationControls"></div>
+            <p class="update-note">Updates are automatically paused while on this tab.</p>
           </div>
-          <div class="search-container">
-            <input id="searchInput" type="text" placeholder="Search...">
-          </div>
-        </div>
-        <div class="table-container">
-          <table id="claimsTable">
-            <thead>
-              <tr>
-                <th class="id-column">ID</th>
-                <th>Time</th>
-                <th>Peercoin Address</th>
-                <th>Patchcoin Address</th>
-                <th class="number">Peercoin Balance</th>
-                <th class="number">Patchcoin Eligible</th>
-                <th class="number">Total Received</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
         </div>
       </div>
     </div>
+
     <script>
       const DATA_URL = 'https://raw.githubusercontent.com/patchcoin/claims-made/refs/heads/main/claims.json';
       const CAP = 21000000;
       let chart;
       window.toggleStates = {};
-      
+      let claimsAddressSet = null;
+      let updatesPaused = false;
+      let updateInterval = null;
+
       let currentPage = 1;
       let totalPages = 1;
       let rowsPerPage = 10;
@@ -455,18 +696,18 @@
       let lastData = null;
       let paginationEnabled = true;
       let firstLoad = true;
-      
+
       function formatNumber(num) {
-        return new Intl.NumberFormat('en-US', { 
-          minimumFractionDigits: 2, 
-          maximumFractionDigits: 2 
+        return new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
         }).format(num);
       }
-      
+
       function truncatedAddress(addr) {
         return addr.length > 18 ? addr.slice(0, 18) + "..." : addr;
       }
-      
+
       function createTooltipHtml(context) {
         if (!context[0]) return '';
         const idx = context[0].dataIndex;
@@ -477,7 +718,7 @@
             ${item.dataset.label}: ${formatNumber(item.parsed.y)}
           </div>`;
         }).join('');
-        
+
         return `
           <div class="chart-tooltip">
             <div style="font-weight: 600; margin-bottom: 8px;">${context[0].label}</div>
@@ -491,20 +732,20 @@
           </div>
         `;
       }
-      
+
       function getPageForIndex(index) {
         if (index < 0) return 1;
         return Math.floor(index / rowsPerPage) + 1;
       }
-      
+
       function paginateData(data) {
         const startIndex = (currentPage - 1) * rowsPerPage;
         const endIndex = startIndex + rowsPerPage;
         return data.slice(startIndex, endIndex);
       }
-      
+
       function findInProgressIndex(data) {
-        return data.findIndex(item => 
+        return data.findIndex(item =>
           item.total_received > 0 && item.total_received < item.patchcoin_eligible
         );
       }
@@ -512,9 +753,9 @@
       function getClaimIdFromGlobalIndex(globalIndex, filteredData) {
         if (filteredData !== allClaimsData) {
           const item = filteredData[globalIndex];
-          return allClaimsData.findIndex(claim => 
-            claim.peercoin_address === item.peercoin_address && 
-            claim.patchcoin_address === item.patchcoin_address && 
+          return allClaimsData.findIndex(claim =>
+            claim.peercoin_address === item.peercoin_address &&
+            claim.patchcoin_address === item.patchcoin_address &&
             claim.nTime === item.nTime
           ) + 1;
         }
@@ -525,7 +766,7 @@
         const toast = document.getElementById('toast');
         toast.textContent = message;
         toast.style.opacity = '1';
-        
+
         setTimeout(() => {
           toast.style.opacity = '0';
         }, duration);
@@ -533,21 +774,21 @@
 
       function handleLinkCopy(e, claimId, localIndex) {
         e.preventDefault();
-        
-        let url = new URL(window.location.href);        
+
+        let url = new URL(window.location.href);
 
         if (paginationEnabled) {
-          const targetPage = getPageForIndex(claimId - 1);          
+          const targetPage = getPageForIndex(claimId - 1);
 
           if (url.searchParams.has('page')) {
             url.searchParams.delete('page');
-          }          
+          }
 
           url.searchParams.append('page', targetPage);
-        }        
+        }
 
         url.hash = `claim-${claimId}`;
-        
+
         navigator.clipboard.writeText(url.href)
           .then(() => {
             showToast(`Link to claim #${claimId} copied!`);
@@ -560,16 +801,16 @@
 
       function scrollToClaimFromHash() {
         const hash = window.location.hash;
-        if (!hash || !hash.startsWith('#claim-')) return;
-        
+        if (!hash.startsWith('#claim-')) return;
+
         const targetClaimId = parseInt(hash.substring(7));
-        if (isNaN(targetClaimId) || targetClaimId < 1 || targetClaimId > allClaimsData.length) return;        
+        if (isNaN(targetClaimId) || targetClaimId < 1 || targetClaimId > allClaimsData.length) return;
 
         const urlParams = new URLSearchParams(window.location.search);
-        const urlPage = urlParams.get('page');        
+        const urlPage = urlParams.get('page');
 
         const claimIndex = targetClaimId - 1;
-        const targetPage = getPageForIndex(claimIndex);        
+        const targetPage = getPageForIndex(claimIndex);
 
         if (urlPage && paginationEnabled) {
           currentPage = parseInt(urlPage);
@@ -594,7 +835,7 @@
           }, 100);
         });
       }
-      
+
       async function fetchData() {
         try {
           const response = await fetch(DATA_URL, { cache: "no-cache" });
@@ -609,15 +850,15 @@
           return [];
         }
       }
-      
+
       function togglePaginationControls() {
         const controlsContainer = document.getElementById('paginationControls');
         controlsContainer.innerHTML = '';
-        
+
         if (paginationEnabled) {
           const paginationDiv = document.createElement('div');
           paginationDiv.className = 'pagination';
-          
+
           const firstButton = document.createElement('button');
           firstButton.id = 'firstPage';
           firstButton.textContent = '««';
@@ -625,7 +866,7 @@
             currentPage = 1;
             updateTable();
           });
-          
+
           const prevButton = document.createElement('button');
           prevButton.id = 'prevPage';
           prevButton.textContent = '«';
@@ -635,12 +876,12 @@
               updateTable();
             }
           });
-          
+
           const pageInfo = document.createElement('span');
           pageInfo.className = 'pagination-info';
           pageInfo.id = 'paginationInfo';
           pageInfo.textContent = `${currentPage}/${totalPages}`;
-          
+
           const nextButton = document.createElement('button');
           nextButton.id = 'nextPage';
           nextButton.textContent = '»';
@@ -650,7 +891,7 @@
               updateTable();
             }
           });
-          
+
           const lastButton = document.createElement('button');
           lastButton.id = 'lastPage';
           lastButton.textContent = '»»';
@@ -658,18 +899,18 @@
             currentPage = totalPages;
             updateTable();
           });
-          
+
           firstButton.disabled = currentPage === 1;
           prevButton.disabled = currentPage === 1;
           nextButton.disabled = currentPage === totalPages;
           lastButton.disabled = currentPage === totalPages;
-          
+
           paginationDiv.appendChild(firstButton);
           paginationDiv.appendChild(prevButton);
           paginationDiv.appendChild(pageInfo);
           paginationDiv.appendChild(nextButton);
           paginationDiv.appendChild(lastButton);
-          
+
           const inProgressIndex = findInProgressIndex(allClaimsData);
           if (inProgressIndex >= 0) {
             const jumpButton = document.createElement('button');
@@ -681,7 +922,7 @@
             });
             paginationDiv.appendChild(jumpButton);
           }
-          
+
           controlsContainer.appendChild(paginationDiv);
         } else {
           const placeholder = document.createElement('div');
@@ -689,7 +930,7 @@
           controlsContainer.appendChild(placeholder);
         }
       }
-      
+
       function initPagination() {
         const savedPaginationState = localStorage.getItem('patchcoinPaginationEnabled');
         if (savedPaginationState !== null) {
@@ -705,7 +946,7 @@
           updateTable();
         });
       }
-      
+
       function updateTable(callback) {
         let filteredData = allClaimsData;
         const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -716,35 +957,35 @@
                    new Date(item.nTime * 1000).toLocaleString().toLowerCase().includes(searchTerm);
           });
         }
-        
+
         totalPages = Math.ceil(filteredData.length / rowsPerPage);
         if (currentPage > totalPages) {
           currentPage = totalPages || 1;
         }
-        
+
         const dataToShow = paginationEnabled ? paginateData(filteredData) : filteredData;
         const tableBody = document.querySelector("#claimsTable tbody");
         tableBody.innerHTML = "";
-        
+
         dataToShow.forEach((item, localIndex) => {
           const key = item.peercoin_address + '-' + item.patchcoin_address + '-' + item.nTime;
           const globalIndex = filteredData.indexOf(item);
-          const claimId = getClaimIdFromGlobalIndex(globalIndex, filteredData);          
+          const claimId = getClaimIdFromGlobalIndex(globalIndex, filteredData);
 
-          const rowId = paginationEnabled 
+          const rowId = paginationEnabled
             ? `claim-${claimId}`
             : `claim-${claimId}`;
-          
+
           const row = document.createElement("tr");
           row.id = rowId;
           row.className = 'claim-row';
-          
+
           const fillPercentage = item.patchcoin_eligible > 0
             ? Math.min((item.total_received / item.patchcoin_eligible) * 100, 100)
             : 0;
           row.style.background = `linear-gradient(to right, var(--fill-color) ${fillPercentage}%, transparent ${fillPercentage}%)`;
           const date = new Date(item.nTime * 1000).toLocaleString();
-          
+
           row.innerHTML = `
             <td class="id-column">
               <span class="claim-id">${claimId}</span>
@@ -764,9 +1005,9 @@
             <td class="number">${formatNumber(item.total_received)}</td>
             <td><button class="toggleRow" data-key="${key}">JSON</button></td>
           `;
-          
+
           tableBody.appendChild(row);
-          
+
           const detailRow = document.createElement("tr");
           detailRow.setAttribute('data-parent-id', rowId);
           detailRow.style.display = window.toggleStates[key] ? "table-row" : "none";
@@ -777,7 +1018,7 @@
           detailRow.appendChild(detailCell);
           tableBody.appendChild(detailRow);
         });
-        
+
         document.querySelectorAll(".toggleRow").forEach(button => {
           button.addEventListener("click", function() {
             const key = this.dataset.key;
@@ -792,15 +1033,20 @@
             }
           });
         });
-        
+
         togglePaginationControls();
-        
+
         if (typeof callback === 'function') {
           callback();
         }
       }
-      
+
       async function updateDashboard() {
+
+        if (!document.getElementById('dashboard-view').classList.contains('hidden')) {
+          showToast('Updating dashboard data...', 1000);
+        }
+
         const data = await fetchData();
         data.sort((a, b) => a.nTime - b.nTime);
 
@@ -811,22 +1057,22 @@
             currentPage = parseInt(urlPage);
           }
         }
-        
+
         if (firstLoad) {
           const inProgressIndex = findInProgressIndex(data);
           currentPage = inProgressIndex >= 0 ? getPageForIndex(inProgressIndex) : 1;
           firstLoad = false;
         }
-        
+
         lastData = data;
         window.sortedClaims = data;
         allClaimsData = data;
         totalPages = Math.ceil(allClaimsData.length / rowsPerPage);
-        
+
         if (currentPage > totalPages) {
           currentPage = totalPages || 1;
         }
-        
+
         const times = [];
         const cumulativeEligible = [];
         const cumulativeReceived = [];
@@ -834,7 +1080,10 @@
         let totalEligible = 0;
         let totalReceived = 0;
         let totalPeercoin = 0;
-        
+
+
+        claimsAddressSet = new Set(data.map(entry => entry.peercoin_address));
+
         allClaimsData.forEach(item => {
           totalEligible += item.patchcoin_eligible;
           cumulativeEligible.push(totalEligible);
@@ -845,7 +1094,7 @@
           const date = new Date(item.nTime * 1000);
           times.push(date.toLocaleString());
         });
-        
+
         const chartConfig = {
           type: 'line',
           data: {
@@ -890,10 +1139,10 @@
             scales: {
               x: {
                 grid: { display: false },
-                ticks: { 
-                  maxTicksLimit: window.innerWidth < 768 ? 5 : 10, 
-                  maxRotation: 45, 
-                  minRotation: 45 
+                ticks: {
+                  maxTicksLimit: window.innerWidth < 768 ? 5 : 10,
+                  maxRotation: 45,
+                  minRotation: 45
                 }
               },
               y: {
@@ -930,14 +1179,14 @@
             }
           }
         };
-        
+
         if (chart) {
           chart.destroy();
         }
-        
+
         const ctx = document.getElementById('claimsChart').getContext('2d');
         chart = new Chart(ctx, chartConfig);
-        
+
         const eligiblePercent = Math.min((totalEligible / CAP) * 100, 100);
         const receivedPercent = Math.min((totalReceived / CAP) * 100, 100);
         const peercoinPercent = Math.min((totalPeercoin / 29405803) * 100, 100);
@@ -950,20 +1199,226 @@
         document.getElementById('eligibleSubtitle').textContent = `${formatNumber(totalEligible)} / ${formatNumber(CAP)}`;
         document.getElementById('receivedSubtitle').textContent = `${formatNumber(totalReceived)} / ${formatNumber(CAP)}`;
         document.getElementById('peercoinSubtitle').textContent = `${formatNumber(totalPeercoin)} / ${formatNumber(29405803)}`;
-        
+
         updateTable(() => {
           scrollToClaimFromHash();
         });
       }
 
+
+      async function checkAddresses(inputType) {
+
+        document.getElementById('loader').classList.remove('hidden');
+        document.getElementById('status').textContent = 'Checking addresses...';
+        document.getElementById('status').className = 'output-status';
+
+
+        if (!claimsAddressSet) {
+          await updateDashboard();
+        }
+
+        let inputAddresses = new Set();
+
+        try {
+          if (inputType === 'text') {
+            let inputText = document.getElementById("addressInput").value.trim();
+            if (!inputText) {
+              throw new Error("Please enter at least one address.");
+            }
+            inputAddresses = new Set(inputText.split(/[\s,]+/).filter(addr => addr));
+          } else if (inputType === 'json') {
+            let inputText = document.getElementById("jsonInput").value.trim();
+            if (!inputText) {
+              throw new Error("Please enter JSON data.");
+            }
+            try {
+              let jsonData = JSON.parse(inputText);
+              if (!Array.isArray(jsonData)) {
+                throw new Error("Invalid JSON format. Expected an array.");
+              }
+              inputAddresses = new Set(jsonData.map(entry => entry.address).filter(addr => addr));
+            } catch (error) {
+              throw new Error("Invalid JSON format: " + error.message);
+            }
+          } else if (inputType === 'file') {
+            let file = document.getElementById("jsonFile").files[0];
+            if (!file) {
+              throw new Error("Please upload a JSON file.");
+            }
+
+            try {
+              let text = await file.text();
+              let jsonData = JSON.parse(text);
+              if (!Array.isArray(jsonData)) {
+                throw new Error("Invalid JSON format. Expected an array.");
+              }
+              inputAddresses = new Set(jsonData.map(entry => entry.address).filter(addr => addr));
+            } catch (error) {
+              throw new Error("Invalid JSON file: " + error.message);
+            }
+          }
+
+          if (inputAddresses.size === 0) {
+            throw new Error("No valid addresses found in the input.");
+          }
+
+          let missing = [...inputAddresses].filter(addr => !claimsAddressSet.has(addr));
+
+
+          const statusEl = document.getElementById('status');
+          const outputEl = document.getElementById('output');
+
+          if (missing.length === 0) {
+            statusEl.textContent = `Success! All ${inputAddresses.size} addresses are present in the claims.`;
+            statusEl.className = 'output-status status-success';
+            outputEl.textContent = 'All addresses have been successfully claimed.';
+          } else {
+            statusEl.textContent = `Found ${missing.length} out of ${inputAddresses.size} addresses missing from claims.`;
+            statusEl.className = 'output-status status-warning';
+            outputEl.textContent = missing.join('\n');
+          }
+        } catch (error) {
+
+          document.getElementById('status').textContent = `Error: ${error.message}`;
+          document.getElementById('status').className = 'output-status status-warning';
+          document.getElementById('output').textContent = 'Please correct the error and try again.';
+        } finally {
+
+          document.getElementById('loader').classList.add('hidden');
+        }
+      }
+
+      function switchTab(tabId, tabElement) {
+
+        document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.classList.remove('active');
+        });
+
+
+        document.getElementById(tabId).classList.add('active');
+
+
+        document.querySelectorAll('.tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+
+        tabElement.classList.add('active');
+      }
+
+      function switchView(viewId, event) {
+        if (event) {
+          event.preventDefault();
+
+
+          document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+          });
+          event.target.classList.add('active');
+        }
+
+
+        document.getElementById('dashboard-view').classList.add('hidden');
+        document.getElementById('checker-view').classList.add('hidden');
+
+
+        document.getElementById(viewId + '-view').classList.remove('hidden');
+
+
+        window.location.hash = viewId;
+
+
+        if (viewId === 'dashboard' && chart) {
+          setTimeout(() => {
+            chart.resize();
+          }, 0);
+        }
+      }
+
+
+      function checkUrlHash() {
+        const hash = window.location.hash.substring(1);
+        if (hash === 'checker') {
+          switchView('checker');
+          document.querySelector('a[href="#checker"]').classList.add('active');
+          document.querySelector('a[href="#dashboard"]').classList.remove('active');
+          toggleUpdates(true);
+        } else if (hash.startsWith('claim-')) {
+          switchView('dashboard');
+          toggleUpdates(false);
+        } else {
+          switchView('dashboard');
+          toggleUpdates(false);
+        }
+      }
+
       window.handleLinkCopy = handleLinkCopy;
 
-      window.addEventListener('hashchange', scrollToClaimFromHash);
-      
+      window.addEventListener('hashchange', () => {
+        checkUrlHash();
+        scrollToClaimFromHash();
+      });
+
+
+      function toggleUpdates(shouldPause) {
+        if (shouldPause) {
+
+          if (updateInterval) {
+            clearInterval(updateInterval);
+            updateInterval = null;
+          }
+          updatesPaused = true;
+          document.getElementById('updateStatus').textContent = 'Updates paused';
+          document.getElementById('toggleUpdatesBtn').textContent = 'Resume Updates';
+        } else {
+
+          if (!updateInterval) {
+            updateInterval = setInterval(updateDashboard, 60000);
+          }
+          updatesPaused = false;
+          document.getElementById('updateStatus').textContent = 'Auto-updates every 60 seconds';
+          document.getElementById('toggleUpdatesBtn').textContent = 'Pause Updates';
+        }
+      }
+
+
+      function switchView(viewId, event) {
+        if (event) {
+          event.preventDefault();
+
+
+          document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+          });
+          event.target.classList.add('active');
+        }
+
+
+        document.getElementById('dashboard-view').classList.add('hidden');
+        document.getElementById('checker-view').classList.add('hidden');
+
+
+        document.getElementById(viewId + '-view').classList.remove('hidden');
+
+
+        window.location.hash = viewId;
+
+
+        if (viewId === 'checker') {
+          toggleUpdates(true);
+        } else if (viewId === 'dashboard') {
+          toggleUpdates(false);
+          if (chart) {
+            setTimeout(() => {
+              chart.resize();
+            }, 0);
+          }
+        }
+      }
+
       initPagination();
       updateDashboard();
-      setInterval(updateDashboard, 60000);
-      
+      checkUrlHash();
+      updateInterval = setInterval(updateDashboard, 60000);
       window.addEventListener('resize', () => {
         if (chart) {
           chart.resize();
