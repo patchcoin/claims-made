@@ -411,14 +411,15 @@
 
       #output {
         background-color: #f3f4f6;
-        padding: 1rem;
-        border-radius: 4px;
         white-space: pre-wrap;
         word-break: break-all;
         font-family: monospace;
-        max-height: 300px;
         overflow-y: auto;
         margin-top: 0.5rem;
+      }
+
+      #output table {
+        margin-top: 0 !important;
       }
 
       .output-container {
@@ -435,7 +436,7 @@
       }
 
       .status-warning {
-        color: var(--warning-color);
+        color: var(--peercoin-color);
       }
 
       .update-controls {
@@ -635,11 +636,12 @@
         <div class="card">
           <h2>Patchcoin Claims Checker</h2>
           <p>Check if your Peercoin addresses have been included in the claims. Missing addresses will be displayed below.</p>
+          <p><a href="https://patchcointalk.org/t/ensuring-dust-has-been-claimed/83" target="_blank">Detailed guide</a></p>
 
           <div class="tabs">
             <div class="tab active" onclick="switchTab('tab1', this)">Plain Address List</div>
-            <div class="tab" onclick="switchTab('tab2', this)">Pasted listunspent.json</div>
-            <div class="tab" onclick="switchTab('tab3', this)">Uploaded listunspent.json</div>
+            <div class="tab" onclick="switchTab('tab2', this)">Pasted listreceivedbyaddress.json</div>
+            <!--<div class="tab" onclick="switchTab('tab3', this)">Uploaded listreceivedbyaddress.json</div>-->
           </div>
 
           <div id="tab1" class="tab-content active">
@@ -650,17 +652,19 @@
           </div>
 
           <div id="tab2" class="tab-content">
-            <h3>Check from Pasted listunspent.json</h3>
-            <textarea id="jsonInput" rows="6" placeholder="Paste listunspent.json here"></textarea>
+            <h3>Check from Pasted listreceivedbyaddress.json</h3>
+            <textarea id="jsonInput" rows="6" placeholder="Paste listreceivedbyaddress.json here"></textarea>
             <br>
             <button onclick="checkAddresses('json')">Check JSON</button>
           </div>
 
+          <!--
           <div id="tab3" class="tab-content">
-            <h3>Check from Uploaded listunspent.json</h3>
+            <h3>Check from Uploaded listreceivedbyaddress.json</h3>
             <input type="file" id="jsonFile" accept="application/json">
             <button onclick="checkAddresses('file')">Check JSON</button>
           </div>
+          -->
 
           <div class="output-container">
             <h3>Results</h3>
@@ -683,6 +687,7 @@
 
     <script>
       const DATA_URL = 'https://raw.githubusercontent.com/patchcoin/claims-made/refs/heads/main/claims.json';
+      const REFERENCE_SET = 'https://raw.githubusercontent.com/patchcoin/claims-made/refs/heads/site/peercoin-txoutset-795000.json';
       const CAP = 21000000;
       let chart;
       window.toggleStates = {};
@@ -863,9 +868,9 @@
         });
       }
 
-      async function fetchData() {
+      async function fetchData(url=DATA_URL) {
         try {
-          const response = await fetch(DATA_URL, { cache: "no-cache" });
+          const response = await fetch(url, { cache: "no-cache" });
           if (response.ok) {
             const data = await response.json();
             return data;
@@ -1243,6 +1248,49 @@
         });
       }
 
+      let referenceSetMap = null;
+
+      async function loadReferenceSet() {
+        if (referenceSetMap !== null) {
+          return referenceSetMap;
+        }
+
+        document.getElementById('status').textContent = 'Loading reference set...';
+
+        try {
+          const response = await fetch(REFERENCE_SET, { cache: "no-cache" });
+          if (!response.ok) {
+            throw new Error(`Failed to load reference set: ${response.status}`);
+          }
+
+          const data = await response.json();
+          referenceSetMap = new Map();
+
+          if (Array.isArray(data)) {
+            for (const entry of data) {
+              if (typeof entry === 'object' && entry !== null) {
+                const address = entry.address;
+                const balance = entry.amount || entry.balance || entry.value || 0;
+                if (address) {
+                  referenceSetMap.set(address, balance);
+                }
+              }
+            }
+          } else if (typeof data === 'object' && data !== null) {
+            for (const [address, balance] of Object.entries(data)) {
+              referenceSetMap.set(address, balance);
+            }
+          }
+
+          return referenceSetMap;
+        } catch (error) {
+          console.error("Error loading reference set:", error);
+          document.getElementById('status').textContent = `Error loading reference set: ${error.message}`;
+          document.getElementById('status').className = 'output-status status-warning';
+          return new Map();
+        }
+      }
+
       async function checkAddresses(inputType) {
         document.getElementById('loader').classList.remove('hidden');
         document.getElementById('status').textContent = 'Checking addresses...';
@@ -1251,6 +1299,8 @@
         if (!claimsAddressSet) {
           await updateDashboard();
         }
+
+        const referenceSet = await loadReferenceSet();
 
         let inputAddresses = new Set();
 
@@ -1297,20 +1347,92 @@
             throw new Error("No valid addresses found in the input.");
           }
 
-          let missing = [...inputAddresses].filter(addr => !claimsAddressSet.has(addr));
+          const results = [...inputAddresses].map(addr => {
+            const inClaims = claimsAddressSet.has(addr);
+            const inReferenceSet = referenceSet.has(addr);
+            const balance = inReferenceSet ? referenceSet.get(addr) : null;
+
+            return {
+              address: addr,
+              inClaims,
+              inReferenceSet,
+              balance
+            };
+          });
+
+          const missingFromClaims = results.filter(r => !r.inClaims);
+          const missingFromReference = results.filter(r => !r.inReferenceSet);
+          const missingFromBoth = results.filter(r => !r.inClaims && !r.inReferenceSet);
 
           const statusEl = document.getElementById('status');
           const outputEl = document.getElementById('output');
 
-          if (missing.length === 0) {
-            statusEl.textContent = `Success! All ${inputAddresses.size} addresses are present in the claims.`;
+          let statusMessage = '';
+          if (missingFromClaims.length === 0 && missingFromReference.length === 0) {
+            statusMessage = `Success! All ${inputAddresses.size} addresses are in both claims and reference set.`;
             statusEl.className = 'output-status status-success';
-            outputEl.textContent = 'All addresses have been successfully claimed.';
           } else {
-            statusEl.textContent = `Found ${missing.length} out of ${inputAddresses.size} addresses missing from claims.`;
+            statusMessage = `Found ${missingFromClaims.length} addresses missing from claims`;
+            if (missingFromReference.length > 0) {
+              statusMessage += ` and ${missingFromReference.length} missing from reference set`;
+            }
+            if (missingFromBoth.length > 0) {
+              statusMessage += ` (${missingFromBoth.length} missing from both)`;
+            }
+            statusMessage += '.';
             statusEl.className = 'output-status status-warning';
-            outputEl.textContent = missing.join('\n');
           }
+          statusEl.textContent = statusMessage;
+
+          results.sort((a, b) => {
+            const aInBoth = a.inClaims && a.inReferenceSet ? 1 : 0;
+            const bInBoth = b.inClaims && b.inReferenceSet ? 1 : 0;
+
+            if (bInBoth !== aInBoth) {
+              return bInBoth - aInBoth;
+            }
+
+            if (a.inClaims !== b.inClaims) {
+              return a.inClaims ? -1 : 1;
+            }
+
+            if (a.inReferenceSet !== b.inReferenceSet) {
+              return a.inReferenceSet ? -1 : 1;
+            }
+
+            return a.address.localeCompare(b.address);
+          });
+
+          let tableHtml = `<table class="results-table" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+              <thead>
+                <tr style="background-color: #f2f2f2;">
+                  <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">Address</th>
+                  <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">In Reference</th>
+                  <th style="padding: 8px; text-align: right; border: 1px solid #ddd;">Peercoin Balance</th>
+                  <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">In Claims</th>
+                </tr>
+              </thead>
+              <tbody>`;
+
+          for (const result of results) {
+            const rowStyle = result.inClaims && result.inReferenceSet
+              ? 'background-color: #e6ffe6;'
+              : (!result.inClaims && !result.inReferenceSet
+                ? 'background-color: #ffe6e6;'
+                : '');
+
+            tableHtml += `<tr style="${rowStyle}">
+                <td style="padding: 8px; text-align: left; border: 1px solid #ddd; font-family: monospace;">${result.address}</td>
+                <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${result.inReferenceSet ? 'Yes' : 'No'}</td>
+                <td style="padding: 8px; text-align: right; border: 1px solid #ddd;">${result.inReferenceSet ? formatNumber(result.balance) : 'Not Found'}</td>
+                <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${result.inClaims ? 'Yes' : 'No'}</td>
+              </tr>`;
+          }
+
+          tableHtml += `</tbody>
+            </table>`;
+
+          outputEl.innerHTML = tableHtml;
         } catch (error) {
           document.getElementById('status').textContent = `Error: ${error.message}`;
           document.getElementById('status').className = 'output-status status-warning';
