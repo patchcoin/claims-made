@@ -673,6 +673,7 @@
             <div class="update-status-container">
               <span id="updateStatus">Updates paused</span>
               <button id="toggleUpdatesBtn" class="small-button" onclick="toggleUpdates(!updatesPaused)">Resume Updates</button>
+              <!--<button class="small-button" onclick="updateDashboard(true)">Force Update</button>-->
             </div>
             <p class="update-note">Updates are automatically paused while on this tab.</p>
           </div>
@@ -688,6 +689,7 @@
       let claimsAddressSet = null;
       let updatesPaused = false;
       let updateInterval = null;
+      let lastDataHash = null;
 
       let currentPage = 1;
       let totalPages = 1;
@@ -731,6 +733,31 @@
             </div>
           </div>
         `;
+      }
+
+      function generateDataHash(data) {
+        if (!data || !data.length) return "empty";
+
+        const claimCount = data.length;
+        const timeSum = data.reduce((sum, item) => sum + item.nTime, 0);
+        const receivedSum = data.reduce((sum, item) => sum + item.total_received, 0);
+
+        return `${claimCount}-${timeSum}-${receivedSum}`;
+      }
+
+      function hasDataChanged(newData) {
+        const newHash = generateDataHash(newData);
+        if (lastDataHash === null) {
+          lastDataHash = newHash;
+          return true;
+        }
+
+        if (newHash !== lastDataHash) {
+          lastDataHash = newHash;
+          return true;
+        }
+
+        return false;
       }
 
       function getPageForIndex(index) {
@@ -1041,14 +1068,26 @@
         }
       }
 
-      async function updateDashboard() {
-
+      async function updateDashboard(forceUpdate = false) {
         if (!document.getElementById('dashboard-view').classList.contains('hidden')) {
-          showToast('Updating dashboard data...', 1000);
+          showToast('Checking for updates...', 1000);
         }
 
         const data = await fetchData();
         data.sort((a, b) => a.nTime - b.nTime);
+
+        const dataChanged = hasDataChanged(data) || forceUpdate;
+
+        if (!dataChanged) {
+          if (!document.getElementById('dashboard-view').classList.contains('hidden')) {
+            showToast('No changes detected in claims data', 2000);
+          }
+          return;
+        }
+
+        if (!document.getElementById('dashboard-view').classList.contains('hidden')) {
+          showToast('Updating dashboard with new data...', 1500);
+        }
 
         if (firstLoad) {
           const urlParams = new URLSearchParams(window.location.search);
@@ -1080,7 +1119,6 @@
         let totalEligible = 0;
         let totalReceived = 0;
         let totalPeercoin = 0;
-
 
         claimsAddressSet = new Set(data.map(entry => entry.peercoin_address));
 
@@ -1205,13 +1243,10 @@
         });
       }
 
-
       async function checkAddresses(inputType) {
-
         document.getElementById('loader').classList.remove('hidden');
         document.getElementById('status').textContent = 'Checking addresses...';
         document.getElementById('status').className = 'output-status';
-
 
         if (!claimsAddressSet) {
           await updateDashboard();
@@ -1264,7 +1299,6 @@
 
           let missing = [...inputAddresses].filter(addr => !claimsAddressSet.has(addr));
 
-
           const statusEl = document.getElementById('status');
           const outputEl = document.getElementById('output');
 
@@ -1278,25 +1312,20 @@
             outputEl.textContent = missing.join('\n');
           }
         } catch (error) {
-
           document.getElementById('status').textContent = `Error: ${error.message}`;
           document.getElementById('status').className = 'output-status status-warning';
           document.getElementById('output').textContent = 'Please correct the error and try again.';
         } finally {
-
           document.getElementById('loader').classList.add('hidden');
         }
       }
 
       function switchTab(tabId, tabElement) {
-
         document.querySelectorAll('.tab-content').forEach(tab => {
           tab.classList.remove('active');
         });
 
-
         document.getElementById(tabId).classList.add('active');
-
 
         document.querySelectorAll('.tab').forEach(tab => {
           tab.classList.remove('active');
@@ -1309,23 +1338,18 @@
         if (event) {
           event.preventDefault();
 
-
           document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
           });
           event.target.classList.add('active');
         }
 
-
         document.getElementById('dashboard-view').classList.add('hidden');
         document.getElementById('checker-view').classList.add('hidden');
 
-
         document.getElementById(viewId + '-view').classList.remove('hidden');
 
-
         window.location.hash = viewId;
-
 
         if (viewId === 'dashboard' && chart) {
           setTimeout(() => {
@@ -1333,7 +1357,6 @@
           }, 0);
         }
       }
-
 
       function checkUrlHash() {
         const hash = window.location.hash.substring(1);
@@ -1358,10 +1381,8 @@
         scrollToClaimFromHash();
       });
 
-
       function toggleUpdates(shouldPause) {
         if (shouldPause) {
-
           if (updateInterval) {
             clearInterval(updateInterval);
             updateInterval = null;
@@ -1370,9 +1391,8 @@
           document.getElementById('updateStatus').textContent = 'Updates paused';
           document.getElementById('toggleUpdatesBtn').textContent = 'Resume Updates';
         } else {
-
           if (!updateInterval) {
-            updateInterval = setInterval(updateDashboard, 60000);
+            updateInterval = setInterval(() => updateDashboard(false), 60000);
           }
           updatesPaused = false;
           document.getElementById('updateStatus').textContent = 'Auto-updates every 60 seconds';
@@ -1380,51 +1400,17 @@
         }
       }
 
-
-      function switchView(viewId, event) {
-        if (event) {
-          event.preventDefault();
-
-
-          document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-          });
-          event.target.classList.add('active');
-        }
-
-
-        document.getElementById('dashboard-view').classList.add('hidden');
-        document.getElementById('checker-view').classList.add('hidden');
-
-
-        document.getElementById(viewId + '-view').classList.remove('hidden');
-
-
-        window.location.hash = viewId;
-
-
-        if (viewId === 'checker') {
-          toggleUpdates(true);
-        } else if (viewId === 'dashboard') {
-          toggleUpdates(false);
-          if (chart) {
-            setTimeout(() => {
-              chart.resize();
-            }, 0);
-          }
-        }
-      }
-
       initPagination();
-      updateDashboard();
+      updateDashboard(true);
       checkUrlHash();
-      updateInterval = setInterval(updateDashboard, 60000);
+      updateInterval = setInterval(() => updateDashboard(false), 60000);
+
       window.addEventListener('resize', () => {
         if (chart) {
           chart.resize();
         }
       });
-      
+
       document.getElementById('searchInput').addEventListener('input', updateTable);
     </script>
   </body>
