@@ -1,5 +1,14 @@
 [
   {
+    "peercoin_address": "p6W7yJGNpeULJaoKbXU2Q5wA4ooCmPyYNq",
+    "patchcoin_address": "PNdLBj5zwRQbjoTo3NEYocVjPwUXJ13KCS",
+    "signature": "0300000001ee9c8fdfa02aa17cae313c658f6c94037620f6474d085e94f4af26e4c508cf4c00000000fc0047304402206677e69e52d252ec0378d7b079d815f2227fd61549ffab159b8f1b3c058d3c4c022072258a515395271b975fb3cd4af49fc66c67bc222dc8795183259ec982a47b4c0147304402203a3a9f293d09a207acd245c69a19727f7d552a90c53bef34d6c7c3130b8e0eeb02200de5f1cda79f214d5f5af84801f8d27ae3b5cb1e0af2eab5ef186a965e84af62014c695221031fa15fd62a30c8e6f2cf6285d929542a150f38d53abc9522e947593c98a68f6121029da4ca66156023f1a8ad7f8b50bba825a0a021e3b017faaa7d750804b4004b5821038e20f66aca38fd98936262fe51e67c7024d79a8d2515ec15143972990a61298553aeffffffff0180969800000000001976a91499fa21861a6ab1522cfea55a4603ca1ef1bce42f88ac00000000",
+    "peercoin_balance": 10.000000,
+    "patchcoin_eligible": 100.000000,
+    "total_received": 0.000000,
+    "nTime": 1742489963
+  },
+  {
     "peercoin_address": "PQday41y4X4VALoV2anD1pR2VoJGVmpbBq",
     "patchcoin_address": "PFbmAvi1Kxogo8x3x4urZTpF7irKFBjvyT",
     "signature": "INvjGy0K6Br46aiIxB6N8AFrs9/PAPMseYXFFTOt8BxkSxKEMeDUrVuVaVh9CSG6O0kE3JhUQTMF2wdnkxbZHDQ=",
@@ -401,7 +410,7 @@
     "signature": "H0DVuNyd/+pPCyT00uIXiXSrbMAvpjMjV5pi2rYDIttwBpI5NBI0UhG4pT12bhthBNwi3mkcJmjxvrnaC1BCfMY=",
     "peercoin_balance": 666.000000,
     "patchcoin_eligible": 6660.000000,
-    "total_received": 0.000000,
+    "total_received": 1057.249030,
     "nTime": 1741051827
   },
   {
@@ -410,7 +419,7 @@
     "signature": "IFilby3WrbUoDbfExETa6KhnHRTz5t4TfVJU/DiyI43oBdLQHt7eX9ainKzq5I3Fvc4sY/C8EREFCWhU8XBzUKY=",
     "peercoin_balance": 7.347396,
     "patchcoin_eligible": 73.473960,
-    "total_received": 0.000000,
+    "total_received": 73.473960,
     "nTime": 1741043327
   },
   {
@@ -419,7 +428,7 @@
     "signature": "IHjZA+UolIye34QfgoxZXdJYJxFcN9XqsjXt9ld9eB5xGoBN+PSV9PT8cxD0GqOuF5EyvTgFkh2XsgJ7qycfytY=",
     "peercoin_balance": 500.000000,
     "patchcoin_eligible": 5000.000000,
-    "total_received": 3730.722990,
+    "total_received": 5000.000000,
     "nTime": 1741037081
   },
   {
