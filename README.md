@@ -7,17 +7,17 @@ https://patchcoin.github.io/claims-made
 - **Total Claims:** 713
 - **Total Peercoin Balance:** 4387871.067293 PPC
 - **Total Patchcoin Eligible:** 8864625.001970 PTC
-- **Total Received:** 8838455.526270 PTC
-- **Progress Toward 21M Cap:** 42.09%
+- **Total Received:** 8840855.526270 PTC
+- **Progress Toward 21M Cap:** 42.10%
 
 ```
-[#################################-----------------------------------------------] (42.09%)
+[#################################-----------------------------------------------] (42.10%)
 ```
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
 |------------------|------------------|------------------|-------------------|---------------|----------|
 | [PJS97usLm9sP7o7TCPHFUGy48pHMq1MKrr](https://chainz.cryptoid.info/ppc/address.dws?PJS97usLm9sP7o7TCPHFUGy48pHMq1MKrr.htm) | PAZtuGnfnCA3pJ3vMtfYvCKt4m9Mz7kYK2 | 496.947570 | 4969.475700 | 0.000000 | 1742632324 |
-| [PJEYADTYjR3SFwsACFE2xvMfYZRoSW3CYv](https://chainz.cryptoid.info/ppc/address.dws?PJEYADTYjR3SFwsACFE2xvMfYZRoSW3CYv.htm) | PXSn73Wq8NXBfi4Sbqy8oWnQPEfDEhz7qG | 8930.678191 | 50000.000000 | 28800.000000 | 1742629842 |
+| [PJEYADTYjR3SFwsACFE2xvMfYZRoSW3CYv](https://chainz.cryptoid.info/ppc/address.dws?PJEYADTYjR3SFwsACFE2xvMfYZRoSW3CYv.htm) | PXSn73Wq8NXBfi4Sbqy8oWnQPEfDEhz7qG | 8930.678191 | 50000.000000 | 31200.000000 | 1742629842 |
 | [p6W7yJGNpeULJaoKbXU2Q5wA4ooCmPyYNq](https://chainz.cryptoid.info/ppc/address.dws?p6W7yJGNpeULJaoKbXU2Q5wA4ooCmPyYNq.htm) | PNdLBj5zwRQbjoTo3NEYocVjPwUXJ13KCS | 10.000000 | 100.000000 | 100.000000 | 1742489963 |
 | [PQday41y4X4VALoV2anD1pR2VoJGVmpbBq](https://chainz.cryptoid.info/ppc/address.dws?PQday41y4X4VALoV2anD1pR2VoJGVmpbBq.htm) | PFbmAvi1Kxogo8x3x4urZTpF7irKFBjvyT | 0.010400 | 0.104000 | 0.104000 | 1742475708 |
 | [PQCZNWocuC7nGMBSxcjnjhkvYModcGM8rB](https://chainz.cryptoid.info/ppc/address.dws?PQCZNWocuC7nGMBSxcjnjhkvYModcGM8rB.htm) | PPUSxq9r2tLMeEcfkr61FSvrKweGqNPYvn | 0.012680 | 0.126800 | 0.126800 | 1742475540 |
