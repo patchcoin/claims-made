@@ -7,11 +7,11 @@ https://patchcoin.github.io/claims-made
 - **Total Claims:** 711
 - **Total Peercoin Balance:** 4378443.441532 PPC
 - **Total Patchcoin Eligible:** 8809655.526270 PTC
-- **Total Received:** 8757600.000000 PTC
-- **Progress Toward 21M Cap:** 41.70%
+- **Total Received:** 8760000.000000 PTC
+- **Progress Toward 21M Cap:** 41.71%
 
 ```
-[#################################-----------------------------------------------] (41.70%)
+[#################################-----------------------------------------------] (41.71%)
 ```
 
 | Peercoin Address | Patchcoin Address | Peercoin Balance | Patchcoin Eligible | Total Received | Timestamp |
@@ -20,11 +20,11 @@ https://patchcoin.github.io/claims-made
 | [PQday41y4X4VALoV2anD1pR2VoJGVmpbBq](https://chainz.cryptoid.info/ppc/address.dws?PQday41y4X4VALoV2anD1pR2VoJGVmpbBq.htm) | PFbmAvi1Kxogo8x3x4urZTpF7irKFBjvyT | 0.010400 | 0.104000 | 0.000000 | 1742475708 |
 | [PQCZNWocuC7nGMBSxcjnjhkvYModcGM8rB](https://chainz.cryptoid.info/ppc/address.dws?PQCZNWocuC7nGMBSxcjnjhkvYModcGM8rB.htm) | PPUSxq9r2tLMeEcfkr61FSvrKweGqNPYvn | 0.012680 | 0.126800 | 0.000000 | 1742475540 |
 | [PPGuXbHFBMiBc2xkMFqXkk5vjqqCPdo28a](https://chainz.cryptoid.info/ppc/address.dws?PPGuXbHFBMiBc2xkMFqXkk5vjqqCPdo28a.htm) | PWYjGbYemVpZiX7c4CtD8DRGiR5v8yDwSN | 4.174121 | 41.741210 | 0.000000 | 1742459032 |
-| [PFMC1uLA4EBFQeQynifL7C3NXdnxiV7bxm](https://chainz.cryptoid.info/ppc/address.dws?PFMC1uLA4EBFQeQynifL7C3NXdnxiV7bxm.htm) | PPxN5xBNCN91mDkT1TVUTodaeXnQzSqphh | 115929.669241 | 50000.000000 | 0.000000 | 1742244180 |
-| [PVtfSFXdLwA4WfPu315YEBnTQSVk1jn5JC](https://chainz.cryptoid.info/ppc/address.dws?PVtfSFXdLwA4WfPu315YEBnTQSVk1jn5JC.htm) | PPoXGDYS8cCZj1i9dhsaG3mGp5ECLHpqV5 | 2.582792 | 25.827920 | 0.000000 | 1742058680 |
-| [PCMBje2MVVXahg2bGPLVgviUiSpjEeyQxz](https://chainz.cryptoid.info/ppc/address.dws?PCMBje2MVVXahg2bGPLVgviUiSpjEeyQxz.htm) | PMh9oFKaXnfnQEN4zjiGb7MSvKaekMKxDp | 100.000000 | 1000.000000 | 0.000000 | 1742033455 |
-| [PHNYqDEZdNySbQDB3WUBasNTRwNDTiKpf4](https://chainz.cryptoid.info/ppc/address.dws?PHNYqDEZdNySbQDB3WUBasNTRwNDTiKpf4.htm) | PJi2xHA7zzi7FVf8YCTNw9Rs69itGd8WjG | 10.135448 | 101.354480 | 0.000000 | 1742012550 |
-| [PB4QGQAedwiRYHgLZ6RGfzsriBJoMu3KBF](https://chainz.cryptoid.info/ppc/address.dws?PB4QGQAedwiRYHgLZ6RGfzsriBJoMu3KBF.htm) | PU8cjm5X3YNPS3AfvXKF8npy72qzviVvyH | 100.000000 | 1000.000000 | 213.628140 | 1741834182 |
+| [PFMC1uLA4EBFQeQynifL7C3NXdnxiV7bxm](https://chainz.cryptoid.info/ppc/address.dws?PFMC1uLA4EBFQeQynifL7C3NXdnxiV7bxm.htm) | PPxN5xBNCN91mDkT1TVUTodaeXnQzSqphh | 115929.669241 | 50000.000000 | 486.445740 | 1742244180 |
+| [PVtfSFXdLwA4WfPu315YEBnTQSVk1jn5JC](https://chainz.cryptoid.info/ppc/address.dws?PVtfSFXdLwA4WfPu315YEBnTQSVk1jn5JC.htm) | PPoXGDYS8cCZj1i9dhsaG3mGp5ECLHpqV5 | 2.582792 | 25.827920 | 25.827920 | 1742058680 |
+| [PCMBje2MVVXahg2bGPLVgviUiSpjEeyQxz](https://chainz.cryptoid.info/ppc/address.dws?PCMBje2MVVXahg2bGPLVgviUiSpjEeyQxz.htm) | PMh9oFKaXnfnQEN4zjiGb7MSvKaekMKxDp | 100.000000 | 1000.000000 | 1000.000000 | 1742033455 |
+| [PHNYqDEZdNySbQDB3WUBasNTRwNDTiKpf4](https://chainz.cryptoid.info/ppc/address.dws?PHNYqDEZdNySbQDB3WUBasNTRwNDTiKpf4.htm) | PJi2xHA7zzi7FVf8YCTNw9Rs69itGd8WjG | 10.135448 | 101.354480 | 101.354480 | 1742012550 |
+| [PB4QGQAedwiRYHgLZ6RGfzsriBJoMu3KBF](https://chainz.cryptoid.info/ppc/address.dws?PB4QGQAedwiRYHgLZ6RGfzsriBJoMu3KBF.htm) | PU8cjm5X3YNPS3AfvXKF8npy72qzviVvyH | 100.000000 | 1000.000000 | 1000.000000 | 1741834182 |
 | [PXZCsJJQpBUTXTAqfcE45kdmBvcfP4QKMh](https://chainz.cryptoid.info/ppc/address.dws?PXZCsJJQpBUTXTAqfcE45kdmBvcfP4QKMh.htm) | PUAJ6Pm1CA2STURsnjQ7tCw8RfSwa2xPMw | 100.000000 | 1000.000000 | 1000.000000 | 1741693638 |
 | [PAgf7Rtd2ZPGpn81VYZmk8vhPexnz7Yk4Y](https://chainz.cryptoid.info/ppc/address.dws?PAgf7Rtd2ZPGpn81VYZmk8vhPexnz7Yk4Y.htm) | PNtvV2VHWgY7yYCac1iNLyq7LTP4QWcCuj | 0.020492 | 0.204920 | 0.204920 | 1741623544 |
 | [PQ28rhJNpaVnzeW1gvUkiQXYmTXWuSNEoh](https://chainz.cryptoid.info/ppc/address.dws?PQ28rhJNpaVnzeW1gvUkiQXYmTXWuSNEoh.htm) | PGuEo8Wpe3M7njWiP7yzt5cdYyzwSbXAp1 | 0.050000 | 0.500000 | 0.500000 | 1741623491 |
