@@ -808,27 +808,22 @@
         e.preventDefault();
 
         let url = new URL(window.location.href);
+        url.hash = 'dashboard';
+        url.searchParams.set('claim', claimId);
 
         if (paginationEnabled) {
           const targetPage = getPageForIndex(claimId - 1);
-
-          if (url.searchParams.has('page')) {
-            url.searchParams.delete('page');
-          }
-
-          url.searchParams.append('page', targetPage);
+          url.searchParams.set('page', targetPage);
         }
 
-        url.hash = `claim-${claimId}`;
-
         navigator.clipboard.writeText(url.href)
-          .then(() => {
-            showToast(`Link to claim #${claimId} copied!`);
-          })
-          .catch(err => {
-            console.error('Error copying to clipboard:', err);
-            showToast(`Could not copy link. URL: ${url.href}`);
-          });
+                .then(() => {
+                  showToast(`Link to claim #${claimId} copied!`);
+                })
+                .catch(err => {
+                  console.error('Error copying to clipboard:', err);
+                  showToast(`Could not copy link. URL: ${url.href}`);
+                });
       }
 
       function scrollToClaimFromHash() {
@@ -837,6 +832,12 @@
 
         const targetClaimId = parseInt(hash.substring(7));
         if (isNaN(targetClaimId) || targetClaimId < 1 || targetClaimId > allClaimsData.length) return;
+
+        if (document.getElementById('dashboard-view').classList.contains('hidden')) {
+          switchView('dashboard');
+          document.querySelector('a[href="#dashboard"]').classList.add('active');
+          document.querySelector('a[href="#checker"]').classList.remove('active');
+        }
 
         const urlParams = new URLSearchParams(window.location.search);
         const urlPage = urlParams.get('page');
@@ -866,6 +867,43 @@
             }
           }, 100);
         });
+      }
+
+      function checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const claimParam = urlParams.get('claim');
+
+        if (claimParam) {
+          const claimId = parseInt(claimParam);
+          if (!isNaN(claimId) && claimId > 0) {
+            // Ensure we're in dashboard view
+            if (document.getElementById('dashboard-view').classList.contains('hidden')) {
+              switchView('dashboard');
+              document.querySelector('a[href="#dashboard"]').classList.add('active');
+              document.querySelector('a[href="#checker"]').classList.remove('active');
+            }
+
+            if (paginationEnabled) {
+              const targetPage = getPageForIndex(claimId - 1);
+              currentPage = targetPage;
+            }
+
+            updateTable(() => {
+              setTimeout(() => {
+                const element = document.getElementById(`claim-${claimId}`);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  element.style.transition = 'background-color 0.5s ease';
+                  const originalBg = element.style.background;
+                  element.style.background = 'rgba(37, 99, 235, 0.2)';
+                  setTimeout(() => {
+                    element.style.background = originalBg;
+                  }, 2000);
+                }
+              }, 100);
+            });
+          }
+        }
       }
 
       async function fetchData(url=DATA_URL) {
@@ -1244,7 +1282,12 @@
         document.getElementById('peercoinSubtitle').textContent = `${formatNumber(totalPeercoin)} / ${formatNumber(29405803)}`;
 
         updateTable(() => {
-          scrollToClaimFromHash();
+          const hash = window.location.hash.substring(1);
+          if (hash.startsWith('claim-')) {
+            scrollToClaimFromHash();
+          } else {
+            checkUrlParams();
+          }
         });
       }
 
@@ -1482,6 +1525,9 @@
 
       function checkUrlHash() {
         const hash = window.location.hash.substring(1);
+        const urlParams = new URLSearchParams(window.location.search);
+        const claimParam = urlParams.get('claim');
+
         if (hash === 'checker') {
           switchView('checker');
           document.querySelector('a[href="#checker"]').classList.add('active');
@@ -1489,10 +1535,18 @@
           toggleUpdates(true);
         } else if (hash.startsWith('claim-')) {
           switchView('dashboard');
+          document.querySelector('a[href="#dashboard"]').classList.add('active');
+          document.querySelector('a[href="#checker"]').classList.remove('active');
           toggleUpdates(false);
         } else {
           switchView('dashboard');
+          document.querySelector('a[href="#dashboard"]').classList.add('active');
+          document.querySelector('a[href="#checker"]').classList.remove('active');
           toggleUpdates(false);
+
+          if (claimParam) {
+            checkUrlParams();
+          }
         }
       }
 
@@ -1500,7 +1554,13 @@
 
       window.addEventListener('hashchange', () => {
         checkUrlHash();
-        scrollToClaimFromHash();
+
+        const hash = window.location.hash.substring(1);
+        if (hash.startsWith('claim-')) {
+          scrollToClaimFromHash();
+        } else if (hash === 'dashboard') {
+          checkUrlParams();
+        }
       });
 
       function toggleUpdates(shouldPause) {
@@ -1523,8 +1583,8 @@
       }
 
       initPagination();
-      updateDashboard(true);
       checkUrlHash();
+      updateDashboard(true);
       updateInterval = setInterval(() => updateDashboard(false), 60000);
 
       window.addEventListener('resize', () => {
