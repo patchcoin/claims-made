@@ -28,7 +28,6 @@ BEGIN { counter = 1 }
 }'
 
 CURRENT_BLOCK=$("$PATCHCOIN_CLI" getblockcount)
-
 echo "$CURRENT_BLOCK" > "$BLOCK_COUNT_JSON"
 
 if [ $((CURRENT_BLOCK % 100)) -eq 0 ]; then
