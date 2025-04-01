@@ -1,5 +1,4 @@
 #!/bin/bash
-
 REPO_DIR="/root/claims-made"
 PATCHCOIN_CLI="/root/patchcoin-ce463154e90f/bin/patchcoin-cli"
 SOURCE_INDEX_DIR="/root/.patchcoin/indexes/claimindex"
@@ -10,18 +9,16 @@ CLAIMS_COUNT_JSON="${REPO_DIR}/claims_count.json"
 BLOCK_COUNT_JSON="${REPO_DIR}/block_count.json"
 
 cd "$REPO_DIR" || exit 1
-
 mkdir -p "$CLAIMS_DIR"
 mkdir -p "$INDEX_DIR"
 
 CLAIMS_DATA=$("$PATCHCOIN_CLI" getclaims "" 0)
-
 echo "$CLAIMS_DATA" > "$CLAIMS_JSON"
 
 CLAIMS_COUNT=$(echo "$CLAIMS_DATA" | jq 'length')
 echo "$CLAIMS_COUNT" > "$CLAIMS_COUNT_JSON"
 
-echo "$CLAIMS_DATA" | jq -c 'sort_by(.nTime)' | jq -c '.[]' | 
+echo "$CLAIMS_DATA" | jq -c 'sort_by(.nTime)' | jq -c '.[]' |
 awk -v claims_dir="$CLAIMS_DIR" '
 BEGIN { counter = 1 }
 {
@@ -30,11 +27,13 @@ BEGIN { counter = 1 }
     counter++;
 }'
 
+CURRENT_BLOCK=$("$PATCHCOIN_CLI" getblockcount)
+
+echo "$CURRENT_BLOCK" > "$BLOCK_COUNT_JSON"
+
 if [ $((CURRENT_BLOCK % 100)) -eq 0 ]; then
     rsync -a --delete "$SOURCE_INDEX_DIR/" "$INDEX_DIR/"
 fi
-
-"$PATCHCOIN_CLI" getblockcount > "$BLOCK_COUNT_JSON"
 
 if git diff --quiet && git diff --staged --quiet; then
     echo "No changes detected. Exiting."
