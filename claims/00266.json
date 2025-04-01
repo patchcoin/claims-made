@@ -1,9 +1,1 @@
-{
-  "peercoin_address": "PV8Qy417TRxjnbvTEKrajcM7eQkNHBADxd",
-  "patchcoin_address": "P94ETZhbGAsgCdaRzbZSuUhWvdP1ytHGH3",
-  "signature": "ID0D2GhfLg6qexsKmiLp2DVOihOY9rJh6Ps0UQAklUsGd9crzwhEFkeCzh5NuFfsziTb0QZ3JLgDzno371M6ZeA=",
-  "peercoin_balance": 129.793615,
-  "patchcoin_eligible": 1297.936150,
-  "total_received": 1297.936150,
-  "nTime": 1740489877
-}
+{"peercoin_address":"PV8Qy417TRxjnbvTEKrajcM7eQkNHBADxd","patchcoin_address":"P94ETZhbGAsgCdaRzbZSuUhWvdP1ytHGH3","signature":"ID0D2GhfLg6qexsKmiLp2DVOihOY9rJh6Ps0UQAklUsGd9crzwhEFkeCzh5NuFfsziTb0QZ3JLgDzno371M6ZeA=","peercoin_balance":129.793615,"patchcoin_eligible":1297.936150,"total_received":1297.936150,"nTime":1740489877}
