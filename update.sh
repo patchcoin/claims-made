@@ -1,6 +1,6 @@
 #!/bin/bash
 REPO_DIR="/root/claims-made"
-PATCHCOIN_CLI="/root/patchcoin-ce463154e90f/bin/patchcoin-cli"
+PATCHCOIN_CLI="/root/patchcoin-4caa9fc383b0/bin/patchcoin-cli"
 SOURCE_INDEX_DIR="/root/.patchcoin/indexes/claimindex"
 CLAIMS_DIR="${REPO_DIR}/claims"
 INDEX_DIR="${REPO_DIR}/index"
